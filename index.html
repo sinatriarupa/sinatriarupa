@@ -6,199 +6,8 @@
   <title>SINATRIA | Rutan Kelas IIB Pandeglang</title>
 
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-
-  <style>
-    :root{--navy:#002D5E;--gold:#D4AF37;--white:#ffffff;--gray:#f4f4f9;--dark:#333;}
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;}
-    body{background-color:var(--gray);color:var(--dark);line-height:1.6;}
-
-    nav{background-color:var(--navy);color:var(--white);padding:1rem 5%;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:1000;border-bottom:3px solid var(--gold);gap:12px;}
-    .brand{display:flex;align-items:center;gap:10px;min-width:fit-content;}
-    .logo-text{font-weight:700;font-size:1.5rem;letter-spacing:1px;}
-    .brand-logo{width:38px;height:38px;object-fit:contain;border-radius:8px;background:#fff;padding:4px;border:1px solid rgba(255,255,255,.15);}
-    .nav-links{list-style:none;display:flex;flex-wrap:wrap;}
-    .nav-links li{margin-left:20px;}
-    .nav-links a{color:var(--white);text-decoration:none;font-weight:800;transition:.3s;white-space:nowrap;}
-    .nav-links a:hover{color:var(--gold);}
-
-    .btn-small{border:none;padding:10px 12px;border-radius:10px;cursor:pointer;font-weight:900;}
-    .btn-outline{background:#fff;border:1px solid #e5e7eb;color:#0f172a;}
-    .btn-danger{background:#ef4444;color:#fff;padding:10px 14px;border:none;border-radius:8px;cursor:pointer;font-weight:900;}
-
-    .nav-toggle{display:none;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.06);color:#fff;width:44px;height:40px;border-radius:10px;cursor:pointer;}
-    .btn-logout{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);color:#fff;padding:10px 12px;border-radius:10px;cursor:pointer;font-weight:900;display:none;}
-    .btn-login{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);color:#fff;padding:10px 12px;border-radius:10px;cursor:pointer;font-weight:900;display:none;}
-
-    /* Mobile Nav */
-    .mobile-nav{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:1500;padding:18px;}
-    .mobile-nav.show{display:block;}
-    .mobile-nav-panel{width:100%;max-width:420px;margin-left:auto;background:var(--navy);border:1px solid rgba(255,255,255,.12);border-radius:14px;overflow:hidden;box-shadow:0 12px 35px rgba(0,0,0,.35);}
-    .mobile-nav-header{display:flex;align-items:center;justify-content:space-between;padding:14px;border-bottom:1px solid rgba(255,255,255,.12);}
-    .mobile-nav-header strong{color:var(--gold);letter-spacing:.5px;}
-    .mobile-nav-close{border:none;background:rgba(255,255,255,.08);color:#fff;width:40px;height:36px;border-radius:10px;cursor:pointer;}
-    .mobile-links{list-style:none;display:flex;flex-direction:column;padding:10px;gap:8px;}
-    .mobile-links a{display:flex;align-items:center;gap:10px;padding:12px;border-radius:12px;color:#fff;text-decoration:none;font-weight:900;background:rgba(255,255,255,.06);}
-
-    .hero{background:linear-gradient(rgba(0,45,94,.9),rgba(0,45,94,.8)),url("https://drive.google.com/thumbnail?id=1TyNBtwp00T6LezOKvseTQl2okaTV5Dx-&sz=w2000") no-repeat center center/cover;min-height:78vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:#fff;padding:0 20px;}
-    .hero h1{font-size:3rem;margin-bottom:1rem;color:var(--gold);line-height:1.15;}
-    .hero p{font-size:1.1rem;max-width:900px;margin-bottom:2rem;}
-    .btn{background-color:var(--gold);color:var(--navy);padding:12px 30px;text-decoration:none;font-weight:900;border-radius:10px;transition:.3s;display:inline-flex;align-items:center;justify-content:center;gap:8px;}
-    .btn:hover{background:#fff;transform:translateY(-2px);}
-
-    .about{padding:80px 5%;background:#fff;text-align:center;}
-    .about h2{color:var(--navy);margin-bottom:20px;font-size:2rem;}
-    .about p{max-width:900px;margin:0 auto;color:#555;}
-    .about-image{width:100%;max-width:150px;margin:16px auto 18px;display:block;border-radius:14px;border:1px solid #e5e7eb;box-shadow:0 10px 30px rgba(0,0,0,.10);}
-
-    .monitoring{padding:80px 5%;background:#fff;text-align:center;}
-    .monitoring h2{color:var(--navy);margin-bottom:12px;font-size:2rem;}
-    .monitoring p{max-width:900px;margin:0 auto;color:#555;}
-    .monitoring-wrap{margin-top:24px;display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:start;}
-    .chart-card{background:#fff;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,.08);border-top:4px solid var(--gold);padding:18px;text-align:left;}
-    .chart-title{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px;}
-    .chart-title h3{color:var(--navy);font-size:1.1rem;}
-    .chart-title small{color:#64748b;font-weight:900;}
-    .donut-row{display:grid;grid-template-columns:280px 1fr;gap:18px;align-items:center;}
-    .donut-wrap{position:relative;width:280px;height:280px;margin:0 auto;}
-    .donut-svg{width:100%;height:100%;transform:rotate(-90deg);}
-    .donut-bg{fill:none;stroke:#e5e7eb;stroke-width:22;}
-    .donut-seg{fill:none;stroke-width:22;stroke-linecap:butt;transition:stroke-dasharray .6s ease, stroke-dashoffset .6s ease;}
-    .donut-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;pointer-events:none;}
-    .donut-center .big{font-size:2rem;font-weight:900;color:#0f172a;line-height:1.1;}
-    .donut-center .small{color:#64748b;font-weight:900;}
-    .legend{display:flex;flex-direction:column;gap:10px;}
-    .legend-item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border:1px solid #eef2f7;border-radius:12px;background:#fff;}
-    .legend-left{display:flex;align-items:center;gap:10px;}
-    .dot{width:12px;height:12px;border-radius:999px;background:#64748b;flex:0 0 auto;}
-    .legend-name{font-weight:900;color:#0f172a;}
-    .legend-val{font-weight:900;color:#0f172a;}
-    .legend-pct{color:#64748b;font-weight:900;margin-left:8px;font-size:.9rem;}
-    .kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-    .kpi{background:#fff;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,.08);border-top:4px solid var(--gold);padding:14px;text-align:left;}
-    .kpi .label{color:#475569;font-weight:900;font-size:.95rem;}
-    .kpi .value{font-size:2rem;font-weight:900;color:#0f172a;line-height:1.1;}
-    .kpi small{color:#64748b;font-weight:900;}
-    .kpi.baik{border-top-color:#28a745;}
-    .kpi.perbaiki{border-top-color:#ffc107;}
-    .kpi.rusak{border-top-color:#dc3545;}
-    @media (max-width:980px){
-      .monitoring-wrap{grid-template-columns:1fr;}
-      .donut-row{grid-template-columns:1fr;}
-      .chart-card{text-align:center;}
-      .legend{text-align:left;}
-    }
-
-    /* Galeri */
-    .gallery{padding:80px 5%;background:#fff;text-align:center;}
-    .gallery h2{color:var(--navy);margin-bottom:12px;font-size:2rem;}
-    .gallery p{max-width:900px;margin:0 auto;color:#555;}
-    .gallery-grid{max-width:1100px;margin:22px auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
-    .gallery-item{display:block;background:#fff;border:1px solid #eef2f7;border-radius:14px;overflow:hidden;box-shadow:0 4px 15px rgba(0,0,0,.06);text-decoration:none;}
-    .gallery-item img{width:100%;height:170px;object-fit:cover;display:block;}
-    .gallery-item .cap{padding:10px 12px;color:#0f172a;font-weight:900;text-align:left;}
-    .gallery-item .desc{padding:0 12px 12px;color:#64748b;font-weight:900;text-align:left;font-size:.92rem;line-height:1.35;}
-
-    .assets{padding:60px 5%;background:var(--gray);display:none;}
-    .assets.show{display:block;}
-    .assets h2{color:var(--navy);margin-bottom:14px;font-size:1.8rem;text-align:center;}
-    .assets .panel{background:#fff;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,.08);overflow:hidden;border-top:4px solid var(--gold);}
-    .assets-actions{display:flex;gap:10px;justify-content:space-between;align-items:center;padding:12px 14px;background:#fff;border-bottom:1px solid #eef2f7;flex-wrap:wrap;}
-    .hint{color:#64748b;font-weight:900;font-size:.95rem;}
-    .assets-table-wrap{overflow:auto;}
-    .assets table{width:100%;border-collapse:collapse;}
-    .assets thead{background:#f8fafc;}
-    .assets th,.assets td{padding:12px 14px;border-bottom:1px solid #eef2f7;vertical-align:top;text-align:left;font-size:.95rem;white-space:nowrap;}
-    .assets th{color:#0f172a;font-weight:900;}
-    .assets td.wrap{white-space:normal;min-width:220px;}
-    .chip{display:inline-block;padding:4px 10px;border-radius:999px;font-size:.85rem;font-weight:900;}
-    .chip.baik{background:#dcfce7;color:#166534;}
-    .chip.diperbaiki{background:#fef9c3;color:#854d0e;}
-    .chip.rusak{background:#fee2e2;color:#991b1b;}
-
-    .reports{padding:60px 5%;background:var(--gray);display:none;}
-    .reports.show{display:block;}
-    .reports h2{color:var(--navy);margin-bottom:16px;font-size:1.8rem;text-align:center;}
-    .reports .table-wrap{background:#fff;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,.08);overflow:hidden;border-top:4px solid var(--gold);}
-    table{width:100%;border-collapse:collapse;}
-    thead{background:#f8fafc;}
-    th,td{padding:12px 14px;border-bottom:1px solid #eef2f7;vertical-align:top;text-align:left;font-size:.95rem;}
-    th{color:#0f172a;font-weight:900;}
-    .badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:.85rem;font-weight:900;}
-    .badge.ringan{background:#dcfce7;color:#166534;}
-    .badge.sedang{background:#fef9c3;color:#854d0e;}
-    .badge.berat{background:#fee2e2;color:#991b1b;}
-    .reports-actions{display:flex;gap:10px;justify-content:flex-end;padding:12px 14px;background:#fff;border-top:1px solid #eef2f7;flex-wrap:wrap;}
-    .status-badge{display:inline-block;padding:4px 10px;border-radius:999px;font-size:.85rem;font-weight:900;}
-    .status-dilaporkan{background:#dbeafe;color:#1e40af;}
-    .status-proses{background:#fef9c3;color:#854d0e;}
-    .status-selesai{background:#dcfce7;color:#166534;}
-
-    #reportsCards{padding:12px;display:none;gap:12px;}
-    .report-card{background:#fff;border:1px solid #eef2f7;border-radius:14px;box-shadow:0 4px 15px rgba(0,0,0,.06);overflow:hidden;}
-    .report-card .rc-head{padding:12px 14px;background:#f8fafc;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;border-bottom:1px solid #eef2f7;}
-    .report-card .rc-head .date{font-weight:900;color:#0f172a;font-size:.95rem;}
-    .report-card .rc-head .meta{display:flex;flex-direction:column;align-items:flex-end;gap:6px;}
-    .report-card .rc-body{padding:12px 14px;display:grid;gap:10px;}
-    .rc-row{display:grid;grid-template-columns:120px 1fr;gap:10px;align-items:start;}
-    .rc-row .k{color:#64748b;font-weight:900;font-size:.88rem;}
-    .rc-row .v{color:#0f172a;font-weight:900;font-size:.92rem;word-break:break-word;}
-    .rc-desc{margin-top:6px;padding:10px 12px;background:#f8fafc;border:1px solid #eef2f7;border-radius:12px;color:#111827;font-weight:900;white-space:pre-wrap;}
-    .report-card select{padding:9px 10px;border:1px solid #e2e8f0;border-radius:10px;font-weight:900;background:#fff;}
-    .rc-select{display:flex;align-items:center;justify-content:flex-end;gap:10px;}
-    .rc-select label{color:#0f172a;font-weight:900;font-size:.9rem;}
-    .rc-select input[type="checkbox"]{width:18px;height:18px;accent-color:var(--gold);}
-
-    footer{background:var(--navy);color:#fff;padding:40px 5% 20px;border-top:5px solid var(--gold);}
-    .footer-content{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:30px;margin-bottom:30px;}
-    .footer-section h4{color:var(--gold);margin-bottom:15px;text-transform:uppercase;}
-    .pasti-slogan{font-size:1.2rem;font-weight:900;color:var(--gold);letter-spacing:2px;}
-    .copyright{text-align:center;padding-top:20px;border-top:1px solid rgba(255,255,255,.1);font-size:.9rem;font-weight:900;}
-
-    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;padding:20px;z-index:2000;}
-    .modal-overlay.show{display:flex;}
-    .modal{width:100%;max-width:720px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 12px 35px rgba(0,0,0,.25);border-top:5px solid var(--gold);max-height:92vh;display:flex;flex-direction:column;}
-    .modal-header{background:var(--navy);color:#fff;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:3;}
-    .modal-header h3{font-size:1.1rem;font-weight:900;letter-spacing:.3px;}
-    .modal-close{border:none;background:transparent;color:#fff;font-size:1.25rem;cursor:pointer;padding:6px 8px;border-radius:8px;transition:.2s;}
-    .modal-close:hover{background:rgba(255,255,255,.12);}
-    .modal-body{padding:18px;flex:1 1 auto;overflow:auto;-webkit-overflow-scrolling:touch;}
-    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-    .form-group{display:flex;flex-direction:column;gap:6px;}
-    .form-group.full{grid-column:1 / -1;}
-    label{font-weight:900;color:#1f2a37;font-size:.95rem;}
-    input[type="text"],input[type="password"],input[type="file"],select,textarea{padding:10px 12px;border:1px solid #e2e8f0;border-radius:8px;outline:none;transition:.2s;background:#fff;}
-    textarea{min-height:110px;resize:vertical;}
-    input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,175,55,.25);}
-    .modal-footer{padding:14px 18px 18px;display:flex;justify-content:flex-end;gap:10px;border-top:1px solid #eef2f7;position:sticky;bottom:0;background:#fff;z-index:2;}
-    .btn-secondary{background:#e5e7eb;color:#111827;padding:10px 16px;border:none;border-radius:8px;cursor:pointer;font-weight:900;}
-    .btn-primary{background:var(--gold);color:var(--navy);padding:10px 16px;border:none;border-radius:8px;cursor:pointer;font-weight:900;}
-    .preview{margin-top:10px;display:none;gap:12px;align-items:center;}
-    .preview.show{display:flex;}
-    .preview img{width:120px;height:90px;object-fit:cover;border-radius:10px;border:1px solid #e5e7eb;}
-    .preview small{color:#6b7280;font-weight:900;}
-
-    @media (max-width:768px){
-      .hero{min-height:72vh;}
-      .hero h1{font-size:2rem;}
-      .nav-links{display:none;}
-      .nav-toggle{display:inline-flex;align-items:center;justify-content:center;}
-      .donut-wrap{width:240px;height:240px;}
-      .donut-row{gap:14px;}
-    }
-    @media (max-width:680px){
-      .form-grid{grid-template-columns:1fr;}
-      .modal-overlay{padding:12px;align-items:flex-end;}
-      .modal{max-width:100%;width:100%;border-radius:14px 14px 0 0;max-height:92vh;}
-      .modal-body{padding:14px;}
-      .modal-footer{padding:12px 14px 14px;}
-      .modal-footer .btn-secondary,.modal-footer .btn-primary{flex:1 1 0;}
-      #reportsTable{display:none;}
-      #reportsCards{display:grid;}
-      .reports-actions{justify-content:stretch;}
-      .reports-actions button{flex:1 1 0;}
-      .rc-row{grid-template-columns:98px 1fr;}
-    }
-  </style>
+  
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
@@ -231,10 +40,8 @@
       <li><a href="#about">Tentang</a></li>
       <li><a href="#monitoring">Monitoring</a></li>
       <li><a href="#galeri">Galeri</a></li>
-
       <li><a href="#" id="pegawaiAccessLink">Akses Pegawai</a></li>
 
-      <!-- INTERNAL (disembunyikan sebelum unlock pegawai) -->
       <li><a href="#" id="kelolaAsetLink">Kelola Aset</a></li>
       <li><a href="#" id="inputAsetLink">Input Aset</a></li>
       <li><a href="#" id="requestPerbaikanLink">Pengajuan Perbaikan</a></li>
@@ -242,7 +49,6 @@
     </ul>
   </nav>
 
-  <!-- Mobile Nav -->
   <div class="mobile-nav" id="mobileNav" aria-hidden="true">
     <div class="mobile-nav-panel" role="dialog" aria-modal="true" aria-label="Menu navigasi">
       <div class="mobile-nav-header">
@@ -253,17 +59,12 @@
       <ul class="mobile-links">
         <li><a class="mobile-link" href="#" id="mobileAdminLoginBtn"><i class="fas fa-lock"></i> Login Admin</a></li>
         <li><a class="mobile-link" href="#" id="mobileAdminLogoutBtn" style="display:none;"><i class="fas fa-right-from-bracket"></i> Logout Admin</a></li>
-
         <li><a class="mobile-link" href="#" id="mobilePegawaiLogoutBtn" style="display:none;"><i class="fas fa-arrow-right-from-bracket"></i> Logout Pegawai</a></li>
-
         <li><a class="mobile-link" href="#beranda"><i class="fas fa-home"></i> Beranda</a></li>
         <li><a class="mobile-link" href="#about"><i class="fas fa-circle-info"></i> Tentang</a></li>
         <li><a class="mobile-link" href="#monitoring"><i class="fas fa-chart-pie"></i> Monitoring</a></li>
         <li><a class="mobile-link" href="#galeri"><i class="fas fa-images"></i> Galeri</a></li>
-
         <li><a class="mobile-link" href="#" id="mobilePegawaiAccessLink"><i class="fas fa-key"></i> Akses Pegawai</a></li>
-
-        <!-- INTERNAL (disembunyikan sebelum unlock pegawai) -->
         <li><a class="mobile-link" href="#" id="mobileKelolaAsetLink"><i class="fas fa-box-archive"></i> Kelola Aset</a></li>
         <li><a class="mobile-link" href="#" id="mobileInputAsetLink"><i class="fas fa-pen-to-square"></i> Input Aset</a></li>
         <li><a class="mobile-link" href="#" id="mobileRequestPerbaikanLink"><i class="fas fa-wrench"></i> Pengajuan Perbaikan</a></li>
@@ -278,23 +79,23 @@
     <a href="#about" class="btn"><i class="fas fa-arrow-down"></i> Pelajari Selengkapnya</a>
   </section>
 
-  <section class="about" id="about">
-    <h2>Tentang SINATRIA</h2>
-    <img class="about-image" src="https://drive.google.com/thumbnail?id=1sDQZytdf6HV0uqP5FoN8oBqmayJLMDnW&sz=w2000" alt="Gambar Tentang SINATRIA" />
-    <p>SINATRIA (Sistem Informasi Ngatur Inventaris Jeung Alat Nagara) adalah platform inovatif untuk mengoptimalkan pendataan, pemantauan, dan pemeliharaan BMN di lingkungan Rutan Kelas IIB Pandeglang.</p>
+  <section id="about" style="background-image: url('https://drive.google.com/thumbnail?id=1SX5C8C60Z_ay9TsTrcUSD4m5BcE0m81t&sz=w2000');">
+    <div class="about-overlay-content">
+      <h2>Tentang SINATRIA</h2>
+      <img class="about-image" src="https://drive.google.com/thumbnail?id=1sDQZytdf6HV0uqP5FoN8oBqmayJLMDnW&sz=w2000" alt="Gambar Tentang SINATRIA" />
+      <p>SINATRIA (Sistem Informasi Ngatur Inventaris Jeung Alat Nagara) adalah platform inovatif untuk mengoptimalkan pendataan, pemantauan, dan pemeliharaan BMN di lingkungan Rutan Kelas IIB Pandeglang.</p>
+    </div>
   </section>
 
   <section class="monitoring" id="monitoring">
     <h2>Monitoring Aset</h2>
     <p>Pantauan ringkas kondisi aset: total, baik, sedang diperbaiki, dan rusak.</p>
-
     <div class="monitoring-wrap">
       <div class="chart-card">
         <div class="chart-title">
           <h3>Diagram Lingkaran Kondisi Aset</h3>
           <small>*Persentase dari total</small>
         </div>
-
         <div class="donut-row">
           <div class="donut-wrap" aria-label="Diagram lingkaran kondisi aset">
             <svg class="donut-svg" viewBox="0 0 120 120" role="img">
@@ -303,13 +104,11 @@
               <circle id="seg-perbaiki" class="donut-seg" cx="60" cy="60" r="42" stroke="#ffc107"></circle>
               <circle id="seg-rusak" class="donut-seg" cx="60" cy="60" r="42" stroke="#dc3545"></circle>
             </svg>
-
             <div class="donut-center">
               <div class="big" id="donut-total">0</div>
               <div class="small">Total Aset</div>
             </div>
           </div>
-
           <div class="legend" aria-label="Legenda diagram">
             <div class="legend-item">
               <div class="legend-left"><span class="dot" style="background:#28a745;"></span><span class="legend-name">Baik</span></div>
@@ -326,7 +125,6 @@
           </div>
         </div>
       </div>
-
       <div class="kpi-grid">
         <div class="kpi"><div class="label">Total Aset</div><div class="value" id="kpi-total">0</div><small>Jumlah keseluruhan aset</small></div>
         <div class="kpi baik"><div class="label">Kondisi Baik</div><div class="value" id="kpi-baik">0</div><small>Aset siap digunakan</small></div>
@@ -336,45 +134,225 @@
     </div>
   </section>
 
-  <!-- GALERI (Publik) - manual link Drive + deskripsi manual -->
   <section class="gallery" id="galeri">
     <h2>Galeri Fasilitas Rutan</h2>
-    <p>Dokumentasi fasilitas dan lingkungan Rutan Kelas IIB Pandeglang.</p>
+    <p>Dokumentasi fasilitas dan lingkungan Rutan Kelas IIB Pandeglang. Geser foto untuk melihat detail.</p>
 
     <div class="gallery-grid" id="galleryGrid">
-      <!-- =======================================================
-           EDIT MANUAL DI SINI:
-           Isi fileId & teks sesuai kebutuhan.
-           fileId = bagian setelah /d/ pada link Drive
-           Contoh link: https://drive.google.com/file/d/FILE_ID/view
-           ======================================================= -->
-      <a class="gallery-item" href="https://drive.google.com/file/d/FILE_ID_1/view" target="_blank" rel="noopener noreferrer">
-        <img src="https://drive.google.com/thumbnail?id=FILE_ID_1&sz=w1200" alt="Fasilitas 1">
+      
+      <div class="gallery-item">
+        <div class="slider-container">
+          <div class="slider-wrapper" id="slider-1">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_1A&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_1B&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_1C&sz=w800" alt="Foto 3">
+          </div>
+          <button class="slider-btn prev" onclick="moveSlide('slider-1', -1)">&#10094;</button>
+          <button class="slider-btn next" onclick="moveSlide('slider-1', 1)">&#10095;</button>
+        </div>
         <div class="cap">Fasilitas 1</div>
-        <div class="desc">Deskripsi fasilitas 1 (isi manual di HTML).</div>
-      </a>
+        <div class="desc">Deskripsifasilitas 1 (isi manual di sini).</div>
+      </div>
 
-      <a class="gallery-item" href="https://drive.google.com/file/d/FILE_ID_2/view" target="_blank" rel="noopener noreferrer">
-        <img src="https://drive.google.com/thumbnail?id=FILE_ID_2&sz=w1200" alt="Fasilitas 2">
+      <div class="gallery-item">
+        <div class="slider-container">
+          <div class="slider-wrapper" id="slider-2">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_2A&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_2B&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_2C&sz=w800" alt="Foto 3">
+          </div>
+          <button class="slider-btn prev" onclick="moveSlide('slider-2', -1)">&#10094;</button>
+          <button class="slider-btn next" onclick="moveSlide('slider-2', 1)">&#10095;</button>
+        </div>
         <div class="cap">Fasilitas 2</div>
-        <div class="desc">Deskripsi fasilitas 2 (isi manual di HTML).</div>
-      </a>
+        <div class="desc">Deskripsi fasilitas 2 (isi manual di sini).</div>
+      </div>
 
-      <a class="gallery-item" href="https://drive.google.com/file/d/FILE_ID_3/view" target="_blank" rel="noopener noreferrer">
-        <img src="https://drive.google.com/thumbnail?id=FILE_ID_3&sz=w1200" alt="Fasilitas 3">
+      <div class="gallery-item">
+        <div class="slider-container">
+          <div class="slider-wrapper" id="slider-3">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_3A&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_3B&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_3C&sz=w800" alt="Foto 3">
+          </div>
+          <button class="slider-btn prev" onclick="moveSlide('slider-3', -1)">&#10094;</button>
+          <button class="slider-btn next" onclick="moveSlide('slider-3', 1)">&#10095;</button>
+        </div>
         <div class="cap">Fasilitas 3</div>
-        <div class="desc">Deskripsi fasilitas 3 (isi manual di HTML).</div>
-      </a>
+        <div class="desc">Deskripsi fasilitas 3 (isi manual di sini).</div>
+      </div>
 
-      <a class="gallery-item" href="https://drive.google.com/file/d/FILE_ID_4/view" target="_blank" rel="noopener noreferrer">
-        <img src="https://drive.google.com/thumbnail?id=FILE_ID_4&sz=w1200" alt="Fasilitas 4">
+      <div class="gallery-item">
+        <div class="slider-container">
+          <div class="slider-wrapper" id="slider-4">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_4A&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_4B&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_4C&sz=w800" alt="Foto 3">
+          </div>
+          <button class="slider-btn prev" onclick="moveSlide('slider-4', -1)">&#10094;</button>
+          <button class="slider-btn next" onclick="moveSlide('slider-4', 1)">&#10095;</button>
+        </div>
         <div class="cap">Fasilitas 4</div>
-        <div class="desc">Deskripsi fasilitas 4 (isi manual di HTML).</div>
-      </a>
+        <div class="desc">Deskripsi fasilitas 4 (isi manual di sini).</div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="slider-container">
+          <div class="slider-wrapper" id="slider-5">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_5A&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_5B&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_5C&sz=w800" alt="Foto 3">
+          </div>
+          <button class="slider-btn prev" onclick="moveSlide('slider-5', -1)">&#10094;</button>
+          <button class="slider-btn next" onclick="moveSlide('slider-5', 1)">&#10095;</button>
+        </div>
+        <div class="cap">Fasilitas 5</div>
+        <div class="desc">Deskripsi fasilitas 5 (isi manual di sini).</div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="slider-container">
+          <div class="slider-wrapper" id="slider-6">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_6A&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_6B&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_6C&sz=w800" alt="Foto 3">
+          </div>
+          <button class="slider-btn prev" onclick="moveSlide('slider-6', -1)">&#10094;</button>
+          <button class="slider-btn next" onclick="moveSlide('slider-6', 1)">&#10095;</button>
+        </div>
+        <div class="cap">Fasilitas 6</div>
+        <div class="desc">Deskripsi fasilitas 6 (isi manual di sini).</div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="slider-container">
+          <div class="slider-wrapper" id="slider-7">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_7A&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_7B&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_7C&sz=w800" alt="Foto 3">
+          </div>
+          <button class="slider-btn prev" onclick="moveSlide('slider-7', -1)">&#10094;</button>
+          <button class="slider-btn next" onclick="moveSlide('slider-7', 1)">&#10095;</button>
+        </div>
+        <div class="cap">Fasilitas 7</div>
+        <div class="desc">Deskripsi fasilitas 7 (isi manual di sini).</div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="slider-container">
+          <div class="slider-wrapper" id="slider-8">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_8A&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_8B&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_8C&sz=w800" alt="Foto 3">
+          </div>
+          <button class="slider-btn prev" onclick="moveSlide('slider-8', -1)">&#10094;</button>
+          <button class="slider-btn next" onclick="moveSlide('slider-8', 1)">&#10095;</button>
+        </div>
+        <div class="cap">Fasilitas 8</div>
+        <div class="desc">Deskripsi fasilitas 8 (isi manual di sini).</div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="slider-container">
+          <div class="slider-wrapper" id="slider-9">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_9A&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_9B&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_9C&sz=w800" alt="Foto 3">
+          </div>
+          <button class="slider-btn prev" onclick="moveSlide('slider-9', -1)">&#10094;</button>
+          <button class="slider-btn next" onclick="moveSlide('slider-9', 1)">&#10095;</button>
+        </div>
+        <div class="cap">Fasilitas 9</div>
+        <div class="desc">Deskripsi fasilitas 9 (isi manual di sini).</div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="slider-container">
+          <div class="slider-wrapper" id="slider-10">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_10A&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_10B&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_10C&sz=w800" alt="Foto 3">
+          </div>
+          <button class="slider-btn prev" onclick="moveSlide('slider-10', -1)">&#10094;</button>
+          <button class="slider-btn next" onclick="moveSlide('slider-10', 1)">&#10095;</button>
+        </div>
+        <div class="cap">Fasilitas 10</div>
+        <div class="desc">Deskripsi fasilitas 10 (isi manual di sini).</div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="slider-container">
+          <div class="slider-wrapper" id="slider-11">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_11A&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_11B&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_11C&sz=w800" alt="Foto 3">
+          </div>
+          <button class="slider-btn prev" onclick="moveSlide('slider-11', -1)">&#10094;</button>
+          <button class="slider-btn next" onclick="moveSlide('slider-11', 1)">&#10095;</button>
+        </div>
+        <div class="cap">Fasilitas 11</div>
+        <div class="desc">Deskripsi fasilitas 11 (isi manual di sini).</div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="slider-container">
+          <div class="slider-wrapper" id="slider-12">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_12A&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_12B&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_12C&sz=w800" alt="Foto 3">
+          </div>
+          <button class="slider-btn prev" onclick="moveSlide('slider-12', -1)">&#10094;</button>
+          <button class="slider-btn next" onclick="moveSlide('slider-12', 1)">&#10095;</button>
+        </div>
+        <div class="cap">Fasilitas 12</div>
+        <div class="desc">Deskripsi fasilitas 12 (isi manual di sini).</div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="slider-container">
+          <div class="slider-wrapper" id="slider-13">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_13A&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_13B&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_13C&sz=w800" alt="Foto 3">
+          </div>
+          <button class="slider-btn prev" onclick="moveSlide('slider-13', -1)">&#10094;</button>
+          <button class="slider-btn next" onclick="moveSlide('slider-13', 1)">&#10095;</button>
+        </div>
+        <div class="cap">Fasilitas 13</div>
+        <div class="desc">Deskripsi fasilitas 13 (isi manual di sini).</div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="slider-container">
+          <div class="slider-wrapper" id="slider-14">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_14A&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_14B&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_14C&sz=w800" alt="Foto 3">
+          </div>
+          <button class="slider-btn prev" onclick="moveSlide('slider-14', -1)">&#10094;</button>
+          <button class="slider-btn next" onclick="moveSlide('slider-14', 1)">&#10095;</button>
+        </div>
+        <div class="cap">Fasilitas 14</div>
+        <div class="desc">Deskripsi fasilitas 14 (isi manual di sini).</div>
+      </div>
+
+      <div class="gallery-item">
+        <div class="slider-container">
+          <div class="slider-wrapper" id="slider-15">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_15A&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_15B&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=FILE_ID_15C&sz=w800" alt="Foto 3">
+          </div>
+          <button class="slider-btn prev" onclick="moveSlide('slider-15', -1)">&#10094;</button>
+          <button class="slider-btn next" onclick="moveSlide('slider-15', 1)">&#10095;</button>
+        </div>
+        <div class="cap">Fasilitas 15</div>
+        <div class="desc">Deskripsi fasilitas 15 (isi manual di sini).</div>
+      </div>
+
     </div>
   </section>
 
-  <!-- Admin-only: Kelola Aset -->
   <section class="assets" id="kelola-aset">
     <h2>Kelola Aset (Admin)</h2>
     <div class="panel">
@@ -386,7 +364,6 @@
           <button class="btn-danger" id="deleteSelectedAssetsBtn" type="button"><i class="fas fa-trash"></i> Hapus yang Dipilih</button>
         </div>
       </div>
-
       <div class="assets-table-wrap">
         <table>
           <thead>
@@ -407,7 +384,6 @@
     </div>
   </section>
 
-  <!-- Input Aset -->
   <section class="about" id="input-aset" style="display:none;">
     <h2>Input Aset (Admin)</h2>
     <p>Isi data aset lalu klik Simpan.</p>
@@ -415,39 +391,13 @@
     <div style="max-width:900px;margin:20px auto;text-align:left;">
       <form id="inputAsetForm">
         <div class="form-grid" style="margin-top:12px;">
-          <div class="form-group">
-            <label for="asetNama">Nama Aset</label>
-            <input type="text" id="asetNama" name="asetNama" required />
-          </div>
-
-          <div class="form-group">
-            <label for="merek">Merek</label>
-            <input type="text" id="merek" name="merek" required />
-          </div>
-
-          <div class="form-group">
-            <label for="asetLokasi">Lokasi</label>
-            <input type="text" id="asetLokasi" name="asetLokasi" required />
-          </div>
-
-          <div class="form-group">
-            <label for="asetKondisi">Kondisi</label>
-            <select id="asetKondisi" name="asetKondisi" required>
-              <option value="" selected disabled>Pilih...</option>
-              <option value="baik">Baik</option>
-              <option value="diperbaiki">Diperbaiki</option>
-              <option value="rusak">Rusak</option>
-            </select>
-          </div>
-
-          <div class="form-group full">
-            <label for="asetKeterangan">Keterangan</label>
-            <textarea id="asetKeterangan" name="asetKeterangan" placeholder="Opsional"></textarea>
-          </div>
-
+          <div class="form-group"><label for="asetNama">Nama Aset</label><input type="text" id="asetNama" name="asetNama" required /></div>
+          <div class="form-group"><label for="merek">Merek</label><input type="text" id="merek" name="merek" required /></div>
+          <div class="form-group"><label for="asetLokasi">Lokasi</label><input type="text" id="asetLokasi" name="asetLokasi" required /></div>
+          <div class="form-group"><label for="asetKondisi">Kondisi</label><select id="asetKondisi" name="asetKondisi" required><option value="" selected disabled>Pilih...</option><option value="baik">Baik</option><option value="diperbaiki">Diperbaiki</option><option value="rusak">Rusak</option></select></div>
+          <div class="form-group full"><label for="asetKeterangan">Keterangan</label><textarea id="asetKeterangan" name="asetKeterangan" placeholder="Opsional"></textarea></div>
           <div class="form-group full" id="asetMsg" style="display:none;font-weight:900;"></div>
         </div>
-
         <div class="modal-footer" style="justify-content:flex-end;">
           <button type="button" class="btn-secondary" id="btnTidakSimpan">Tidak</button>
           <button type="submit" class="btn-primary" id="btnSimpanAset">Simpan</button>
@@ -456,28 +406,20 @@
     </div>
   </section>
 
-  <!-- Riwayat -->
   <section class="reports" id="riwayat">
     <h2>Riwayat Laporan Pengajuan Perbaikan</h2>
     <div class="table-wrap">
-      <table id="reportsTable">
-        <thead>
-          <tr>
-            <th style="width:44px;">Pilih</th>
-            <th>Tanggal</th>
-            <th>Nama Pemohon</th>
-            <th>Nama Aset</th>
-            <th>Lokasi</th>
-            <th>Tingkat</th>
-            <th>Status</th>
-            <th>Deskripsi</th>
-            <th>Foto</th>
-            <th>Aksi (Admin)</th>
-          </tr>
-        </thead>
-        <tbody id="reportsTbody"></tbody>
-      </table>
 
+      <div class="assets-table-wrap">
+        <table id="reportsTable">
+          <thead>
+            <tr>
+              <th style="width:44px;">Pilih</th><th>Tanggal</th><th>Nama Pemohon</th><th>Nama Aset</th><th>Lokasi</th><th>Tingkat</th><th>Status</th><th>Deskripsi</th><th>Foto</th><th>Aksi (Admin)</th>
+            </tr>
+          </thead>
+          <tbody id="reportsTbody"></tbody>
+        </table>
+      </div>
       <div id="reportsCards"></div>
 
       <div class="reports-actions">
@@ -491,1163 +433,65 @@
 
   <footer>
     <div class="footer-content">
-      <div class="footer-section">
-        <h4>Rutan Kelas IIB Pandeglang</h4>
-        <p>Jl. Masjid Agung No. 03, Kabupaten Pandeglang, Banten 42211.</p>
-      </div>
-      <div class="footer-section">
-        <h4>Slogan Pelayanan</h4>
-        <p class="pasti-slogan">"PASTI"</p>
-        <p>Profesional, Akuntabel, Sinergi, Transparan, Inovatif.</p>
-      </div>
-      <div class="footer-section">
-        <h4>Tautan Cepat</h4>
-        <p><i class="fas fa-arrow-right"></i> Dashboard Monitoring</p>
-        <p><i class="fas fa-arrow-right"></i> Pengajuan Perbaikan</p>
-      </div>
+      <div class="footer-section"><h4>Rutan Kelas IIB Pandeglang</h4><p>Jl. Raya Serang No. 02, Kadumerak, Karang Tanjung, Kabupaten Pandeglang, Banten 42211.</p></div>
+      <div class="footer-section"><h4>Slogan Pelayanan</h4><p class="pasti-slogan">"PASTI"</p><p>Profesional, Akuntabel, Sinergi, Transparan, Inovatif.</p></div>
+      <div class="footer-section"><h4>Tautan Cepat</h4><p><i class="fas fa-arrow-right"></i> Dashboard Monitoring</p><p><i class="fas fa-arrow-right"></i> Pengajuan Perbaikan</p></div>
     </div>
     <div class="copyright">&copy; 2026 SINATRIA Rutan Pandeglang. All Rights Reserved.</div>
   </footer>
 
-  <!-- Modal Pengajuan Perbaikan -->
   <div class="modal-overlay" id="requestModalOverlay" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="requestModalTitle">
-      <div class="modal-header">
-        <h3 id="requestModalTitle"><i class="fas fa-wrench"></i> Form Pengajuan Perbaikan Aset</h3>
-        <button class="modal-close" id="requestModalCloseBtn" aria-label="Tutup"><i class="fas fa-times"></i></button>
-      </div>
-
+      <div class="modal-header"><h3 id="requestModalTitle"><i class="fas fa-wrench"></i> Form Pengajuan Perbaikan Aset</h3><button class="modal-close" id="requestModalCloseBtn" aria-label="Tutup"><i class="fas fa-times"></i></button></div>
       <div class="modal-body">
         <form id="requestPerbaikanForm">
           <div class="form-grid">
-            <div class="form-group">
-              <label for="namaPemohon">Nama Pemohon</label>
-              <input type="text" id="namaPemohon" name="namaPemohon" required />
-            </div>
-
-            <div class="form-group">
-              <label for="namaAset">Nama Aset</label>
-              <input type="text" id="namaAset" name="namaAset" required />
-            </div>
-
-            <div class="form-group">
-              <label for="lokasiAset">Lokasi</label>
-              <input type="text" id="lokasiAset" name="lokasiAset" required />
-            </div>
-
-            <div class="form-group">
-              <label for="tingkatKerusakan">Tingkat Kerusakan</label>
-              <select id="tingkatKerusakan" name="tingkatKerusakan" required>
-                <option value="" selected disabled>Pilih...</option>
-                <option value="ringan">Ringan</option>
-                <option value="sedang">Sedang</option>
-                <option value="berat">Berat</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="fotoAset">Foto Aset</label>
-              <input type="file" id="fotoAset" name="fotoAset" accept="image/*" capture="environment" required />
-              <div class="preview" id="fotoPreview">
-                <img id="fotoPreviewImg" alt="Preview foto aset" />
-                <small>Preview foto yang dipilih.</small>
-              </div>
-              <!-- FIX: small yang sebelumnya putus sekarang lengkap -->
-              <small style="color:#64748b;font-weight:900;">Foto akan otomatis dikompres (maks 200px) sebelum dikirim.</small>
-            </div>
-
-            <div class="form-group full">
-              <label for="deskripsiKerusakan">Deskripsi Kerusakan</label>
-              <textarea id="deskripsiKerusakan" name="deskripsiKerusakan" required></textarea>
-            </div>
+            <div class="form-group"><label for="namaPemohon">Nama Pemohon</label><input type="text" id="namaPemohon" name="namaPemohon" required /></div>
+            <div class="form-group"><label for="namaAset">Nama Aset</label><input type="text" id="namaAset" name="namaAset" required /></div>
+            <div class="form-group"><label for="lokasiAset">Lokasi</label><input type="text" id="lokasiAset" name="lokasiAset" required /></div>
+            <div class="form-group"><label for="tingkatKerusakan">Tingkat Kerusakan</label><select id="tingkatKerusakan" name="tingkatKerusakan" required><option value="" selected disabled>Pilih...</option><option value="ringan">Ringan</option><option value="sedang">Sedang</option><option value="berat">Berat</option></select></div>
+            <div class="form-group"><label for="fotoAset">Foto Aset</label><input type="file" id="fotoAset" name="fotoAset" accept="image/*" capture="environment" required /><div class="preview" id="fotoPreview"><img id="fotoPreviewImg" alt="Preview foto aset" /><small>Preview foto yang dipilih.</small></div><small style="color:#64748b;font-weight:900;">Foto akan otomatis dikompres (maks 200px).</small></div>
+            <div class="form-group full"><label for="deskripsiKerusakan">Deskripsi Kerusakan</label><textarea id="deskripsiKerusakan" name="deskripsiKerusakan" required></textarea></div>
           </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn-secondary" id="requestModalCancelBtn">Batal</button>
-            <button type="submit" class="btn-primary" id="btnKirimRequest">Kirim Pengajuan</button>
-          </div>
+          <div class="modal-footer"><button type="button" class="btn-secondary" id="requestModalCancelBtn">Batal</button><button type="submit" class="btn-primary" id="btnKirimRequest">Kirim Pengajuan</button></div>
         </form>
       </div>
     </div>
   </div>
 
-  <!-- Modal Login Admin -->
   <div class="modal-overlay" id="adminModalOverlay" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="adminModalTitle">
-      <div class="modal-header">
-        <h3 id="adminModalTitle"><i class="fas fa-lock"></i> Login Admin</h3>
-        <button class="modal-close" id="adminModalCloseBtn" aria-label="Tutup"><i class="fas fa-times"></i></button>
-      </div>
-
+      <div class="modal-header"><h3 id="adminModalTitle"><i class="fas fa-lock"></i> Login Admin</h3><button class="modal-close" id="adminModalCloseBtn" aria-label="Tutup"><i class="fas fa-times"></i></button></div>
       <div class="modal-body">
         <form id="adminLoginForm">
           <div class="form-grid">
-            <div class="form-group full">
-              <label for="adminEmail">Email Admin</label>
-              <input type="text" id="adminEmail" name="adminEmail" required />
-            </div>
-
-            <div class="form-group full">
-              <label for="adminPassword">Password</label>
-              <input type="password" id="adminPassword" name="adminPassword" required />
-            </div>
-
-            <div class="form-group full" id="adminLoginError" style="display:none;color:#b91c1c;font-weight:900;">
-              Email atau password salah / session tidak valid.
-            </div>
+            <div class="form-group full"><label for="adminEmail">Email Admin</label><input type="text" id="adminEmail" name="adminEmail" required /></div>
+            <div class="form-group full"><label for="adminPassword">Password</label><input type="password" id="adminPassword" name="adminPassword" required /></div>
+            <div class="form-group full" id="adminLoginError" style="display:none;color:#b91c1c;font-weight:900;">Email atau password salah / session tidak valid.</div>
           </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn-secondary" id="adminModalCancelBtn">Batal</button>
-            <button type="submit" class="btn-primary">Login</button>
-          </div>
+          <div class="modal-footer"><button type="button" class="btn-secondary" id="adminModalCancelBtn">Batal</button><button type="submit" class="btn-primary">Login</button></div>
         </form>
       </div>
     </div>
   </div>
 
-  <!-- Modal Akses Pegawai (SERVER-SIDE TOKEN) -->
   <div class="modal-overlay" id="pegawaiModalOverlay" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="pegawaiModalTitle">
-      <div class="modal-header">
-        <h3 id="pegawaiModalTitle"><i class="fas fa-key"></i> Akses Pegawai</h3>
-        <button class="modal-close" id="pegawaiModalCloseBtn" aria-label="Tutup"><i class="fas fa-times"></i></button>
-      </div>
-
+      <div class="modal-header"><h3 id="pegawaiModalTitle"><i class="fas fa-key"></i> Akses Pegawai</h3><button class="modal-close" id="pegawaiModalCloseBtn" aria-label="Tutup"><i class="fas fa-times"></i></button></div>
       <div class="modal-body">
         <form id="pegawaiAccessForm">
           <div class="form-grid">
-            <div class="form-group full">
-              <label for="pegawaiPassword">Password Pegawai</label>
-              <input type="password" id="pegawaiPassword" required />
-              <small style="color:#64748b;font-weight:900;">Masukkan password untuk membuka fitur internal.</small>
-            </div>
-
-            <div class="form-group full" id="pegawaiAccessError" style="display:none;color:#b91c1c;font-weight:900;">
-              Password salah / akses ditolak.
-            </div>
+            <div class="form-group full"><label for="pegawaiPassword">Password Pegawai</label><input type="password" id="pegawaiPassword" required /><small style="color:#64748b;font-weight:900;">Masukkan password untuk membuka fitur internal.</small></div>
+            <div class="form-group full" id="pegawaiAccessError" style="display:none;color:#b91c1c;font-weight:900;">Password salah / akses ditolak.</div>
           </div>
-
-          <div class="modal-footer">
-            <button type="button" class="btn-secondary" id="pegawaiModalCancelBtn">Batal</button>
-            <button type="submit" class="btn-primary">Buka Akses</button>
-          </div>
+          <div class="modal-footer"><button type="button" class="btn-secondary" id="pegawaiModalCancelBtn">Batal</button><button type="submit" class="btn-primary">Buka Akses</button></div>
         </form>
       </div>
     </div>
   </div>
 
-  <script>
-    // =========================
-    // CONFIG
-    // =========================
-    const ASSET_API_URL = "https://script.google.com/macros/s/AKfycbyY4M6e7oWs-p6u9p_c8Kl9zRvtVFW7ub-2ReS9QrgKaDj_tZSh5i0hTBG1i5B6vNvV/exec";
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-    const ADMIN_TOKEN_KEY = "sinatria_admin_token";
-    const PEGAWAI_TOKEN_KEY = "sinatria_pegawai_token";
-    const ASSET_STORAGE_KEY = "sinatria_assets_v1";
-
-    // =========================
-    // HELPERS
-    // =========================
-    function escapeHtml(str) {
-      return String(str)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-    function safeJsonParse(text) {
-      try { return JSON.parse(text); }
-      catch { return { ok: false, error: text }; }
-    }
-    function apiPost(payload) {
-      return fetch(ASSET_API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload)
-      }).then(async (res) => {
-        const text = await res.text();
-        return safeJsonParse(text);
-      });
-    }
-
-    // Admin token
-    function getAdminToken() { return sessionStorage.getItem(ADMIN_TOKEN_KEY) || ""; }
-    function setAdminToken(token) { sessionStorage.setItem(ADMIN_TOKEN_KEY, token); }
-    function clearAdminToken() { sessionStorage.removeItem(ADMIN_TOKEN_KEY); }
-    function isAdminLoggedIn() { return Boolean(getAdminToken()); }
-
-    // Pegawai token (server-side session)
-    function getPegawaiToken() { return sessionStorage.getItem(PEGAWAI_TOKEN_KEY) || ""; }
-    function setPegawaiToken(token) { sessionStorage.setItem(PEGAWAI_TOKEN_KEY, token); }
-    function clearPegawaiToken() { sessionStorage.removeItem(PEGAWAI_TOKEN_KEY); }
-    function isPegawai() { return Boolean(getPegawaiToken()); }
-
-    function isUnauthorizedError(msg) {
-      const s = String(msg || "").toLowerCase();
-      return s.includes("unauthorized") || s.includes("not logged in") || s.includes("session expired");
-    }
-
-    async function guardUnauthorizedAdmin(promise) {
-      const out = await promise;
-      if (out && out.ok === false && isUnauthorizedError(out.error)) forceAdminLogout(out.error);
-      return out;
-    }
-
-    async function guardUnauthorizedPegawai(promise) {
-      const out = await promise;
-      if (out && out.ok === false && isUnauthorizedError(out.error)) forcePegawaiLogout(out.error);
-      return out;
-    }
-
-    // =========================
-    // AUTH (Admin)
-    // =========================
-    async function authLogin(email, password) { return apiPost({ mode: "authLogin", email, password }); }
-    async function authLogout() {
-      const token = getAdminToken();
-      if (!token) return { ok: true };
-      return apiPost({ mode: "authLogout", sessionToken: token });
-    }
-
-    function forceAdminLogout(reason) {
-      if (reason) console.warn("Admin logout:", reason);
-      authLogout().catch(()=>{});
-      clearAdminToken();
-      applyAdminUI();
-    }
-
-    async function verifyAdminTokenOnLoad() {
-      const token = getAdminToken();
-      if (!token) return;
-      try {
-        const out = await apiPost({ mode: "authMe", sessionToken: token });
-        if (!out.ok) forceAdminLogout(out.error || "Session invalid");
-      } catch (err) {
-        console.warn("authMe check failed:", err);
-      }
-    }
-
-    // =========================
-    // AUTH (Pegawai - server-side)
-    // Requires Apps Script modes:
-    // - pegawaiLogin {password}
-    // - pegawaiLogout {pegawaiToken}
-    // - pegawaiMe {pegawaiToken}
-    // =========================
-    async function pegawaiLogin(password) { return apiPost({ mode: "pegawaiLogin", password }); }
-    async function pegawaiLogout() {
-      const token = getPegawaiToken();
-      if (!token) return { ok: true };
-      return apiPost({ mode: "pegawaiLogout", pegawaiToken: token });
-    }
-    function forcePegawaiLogout(reason) {
-      if (reason) console.warn("Pegawai logout:", reason);
-      pegawaiLogout().catch(()=>{});
-      clearPegawaiToken();
-      // logout admin juga supaya bersih
-      clearAdminToken();
-      applyPegawaiUI();
-      applyAdminUI();
-    }
-    async function verifyPegawaiTokenOnLoad() {
-      const token = getPegawaiToken();
-      if (!token) return;
-      try {
-        const out = await apiPost({ mode: "pegawaiMe", pegawaiToken: token });
-        if (!out.ok) forcePegawaiLogout(out.error || "Pegawai session invalid");
-      } catch (err) {
-        console.warn("pegawaiMe check failed:", err);
-      }
-    }
-
-    // =========================
-    // DRIVE URL helpers
-    // =========================
-    function driveViewUrlFromFileId(fileId) {
-      const id = String(fileId || "").trim();
-      if (!id) return "";
-      return `https://drive.google.com/file/d/${encodeURIComponent(id)}/view`;
-    }
-    function formatIso(iso) {
-      try {
-        const d = new Date(iso);
-        if (Number.isNaN(d.getTime())) return String(iso || "-");
-        return d.toLocaleString("id-ID", { year:"numeric", month:"2-digit", day:"2-digit", hour:"2-digit", minute:"2-digit" });
-      } catch { return String(iso || "-"); }
-    }
-    function getStatusClass(status) {
-      const s = String(status || "").toLowerCase();
-      if (s === "dilaporkan") return "status-dilaporkan";
-      if (s === "proses") return "status-proses";
-      return "status-selesai";
-    }
-    function normalizeStatus(status) {
-      const s = String(status || "").toLowerCase();
-      if (s === "dilaporkan") return "Dilaporkan";
-      if (s === "proses") return "Proses";
-      return "Sudah di perbaiki";
-    }
-
-    async function compressImageToDataUrl(file, maxSizePx = 200, quality = 0.7) {
-      const imgUrl = URL.createObjectURL(file);
-      try {
-        const img = await new Promise((resolve, reject) => {
-          const el = new Image();
-          el.onload = () => resolve(el);
-          el.onerror = reject;
-          el.src = imgUrl;
-        });
-
-        const w = img.naturalWidth || img.width;
-        const h = img.naturalHeight || img.height;
-
-        const scale = Math.min(1, maxSizePx / Math.max(w, h));
-        const nw = Math.max(1, Math.round(w * scale));
-        const nh = Math.max(1, Math.round(h * scale));
-
-        const canvas = document.createElement("canvas");
-        canvas.width = nw;
-        canvas.height = nh;
-
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, nw, nh);
-
-        return canvas.toDataURL("image/jpeg", quality);
-      } finally {
-        URL.revokeObjectURL(imgUrl);
-      }
-    }
-
-    // =========================
-    // MOBILE NAV
-    // =========================
-    const navToggleBtn = document.getElementById("navToggleBtn");
-    const mobileNav = document.getElementById("mobileNav");
-    const mobileNavCloseBtn = document.getElementById("mobileNavCloseBtn");
-
-    function openMobileNav() {
-      mobileNav.classList.add("show");
-      mobileNav.setAttribute("aria-hidden", "false");
-      navToggleBtn.setAttribute("aria-expanded", "true");
-      document.body.style.overflow = "hidden";
-    }
-    function closeMobileNav() {
-      mobileNav.classList.remove("show");
-      mobileNav.setAttribute("aria-hidden", "true");
-      navToggleBtn.setAttribute("aria-expanded", "false");
-      document.body.style.overflow = "";
-    }
-    navToggleBtn.addEventListener("click", () => mobileNav.classList.contains("show") ? closeMobileNav() : openMobileNav());
-    mobileNavCloseBtn.addEventListener("click", closeMobileNav);
-    mobileNav.addEventListener("click", (e) => { if (e.target === mobileNav) closeMobileNav(); });
-
-    document.querySelectorAll(".mobile-link").forEach(a => {
-      a.addEventListener("click", () => {
-        const href = a.getAttribute("href") || "";
-        if (href.startsWith("#")) closeMobileNav();
-      });
-    });
-
-    // =========================
-    // Pegawai Gate UI + Modal
-    // =========================
-    const pegawaiAccessLink = document.getElementById("pegawaiAccessLink");
-    const mobilePegawaiAccessLink = document.getElementById("mobilePegawaiAccessLink");
-
-    const pegawaiLogoutBtn = document.getElementById("pegawaiLogoutBtn");
-    const mobilePegawaiLogoutBtn = document.getElementById("mobilePegawaiLogoutBtn");
-
-    const riwayatSection = document.getElementById("riwayat");
-    const riwayatNavLink = document.getElementById("riwayatNavLink");
-    const mobileRiwayatNavLink = document.getElementById("mobileRiwayatNavLink");
-
-    function applyPegawaiUI() {
-      const ok = isPegawai();
-
-      // menu internal
-      document.getElementById("kelolaAsetLink").style.display = ok ? "" : "none";
-      document.getElementById("inputAsetLink").style.display = ok ? "" : "none";
-      document.getElementById("requestPerbaikanLink").style.display = ok ? "" : "none";
-      riwayatNavLink.style.display = ok ? "" : "none";
-
-      document.getElementById("mobileKelolaAsetLink").style.display = ok ? "flex" : "none";
-      document.getElementById("mobileInputAsetLink").style.display = ok ? "flex" : "none";
-      document.getElementById("mobileRequestPerbaikanLink").style.display = ok ? "flex" : "none";
-      mobileRiwayatNavLink.style.display = ok ? "flex" : "none";
-
-      // riwayat section
-      if (!ok) riwayatSection.classList.remove("show");
-      else riwayatSection.classList.add("show");
-
-      // tombol pegawai logout
-      pegawaiLogoutBtn.style.display = ok ? "inline-flex" : "none";
-      mobilePegawaiLogoutBtn.style.display = ok ? "flex" : "none";
-
-      // tombol admin hanya tampak kalau pegawai ok
-      adminLoginBtn.style.display = ok && !isAdminLoggedIn() ? "inline-flex" : "none";
-      adminLogoutBtn.style.display = ok && isAdminLoggedIn() ? "inline-flex" : "none";
-
-      mobileAdminLoginBtn.style.display = ok && !isAdminLoggedIn() ? "flex" : "none";
-      mobileAdminLogoutBtn.style.display = ok && isAdminLoggedIn() ? "flex" : "none";
-
-      // jika belum pegawai, sembunyikan section admin
-      if (!ok) {
-        document.getElementById("kelola-aset").classList.remove("show");
-        document.getElementById("input-aset").style.display = "none";
-      }
-    }
-
-    // Pegawai modal
-    const pegawaiOverlay = document.getElementById("pegawaiModalOverlay");
-    const pegawaiCloseBtn = document.getElementById("pegawaiModalCloseBtn");
-    const pegawaiCancelBtn = document.getElementById("pegawaiModalCancelBtn");
-    const pegawaiForm = document.getElementById("pegawaiAccessForm");
-    const pegawaiPassInput = document.getElementById("pegawaiPassword");
-    const pegawaiErr = document.getElementById("pegawaiAccessError");
-
-    function openPegawaiModal() {
-      pegawaiOverlay.classList.add("show");
-      pegawaiOverlay.setAttribute("aria-hidden", "false");
-      pegawaiErr.style.display = "none";
-      pegawaiForm.reset();
-      setTimeout(() => pegawaiPassInput.focus(), 50);
-    }
-    function closePegawaiModal() {
-      pegawaiOverlay.classList.remove("show");
-      pegawaiOverlay.setAttribute("aria-hidden", "true");
-    }
-
-    pegawaiAccessLink.addEventListener("click", (e) => { e.preventDefault(); openPegawaiModal(); });
-    mobilePegawaiAccessLink.addEventListener("click", (e) => { e.preventDefault(); closeMobileNav(); openPegawaiModal(); });
-
-    pegawaiCloseBtn.addEventListener("click", closePegawaiModal);
-    pegawaiCancelBtn.addEventListener("click", closePegawaiModal);
-    pegawaiOverlay.addEventListener("click", (e) => { if (e.target === pegawaiOverlay) closePegawaiModal(); });
-
-    pegawaiForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const pass = String(pegawaiPassInput.value || "").trim();
-      pegawaiErr.style.display = "none";
-
-      try {
-        // server-side login
-        const out = await pegawaiLogin(pass);
-        if (!out.ok) { pegawaiErr.style.display = "block"; return; }
-
-        setPegawaiToken(out.pegawaiToken);
-        closePegawaiModal();
-        applyPegawaiUI();
-        applyAdminUI();
-        await refreshReports().catch(()=>{});
-        alert("Akses pegawai dibuka.");
-      } catch (err) {
-        pegawaiErr.textContent = "Login pegawai gagal: " + String(err);
-        pegawaiErr.style.display = "block";
-      }
-    });
-
-    // Logout pegawai
-    async function logoutPegawaiFlow() {
-      const ok = confirm("Logout pegawai?");
-      if (!ok) return;
-      forcePegawaiLogout("manual logout pegawai");
-      alert("Logout pegawai berhasil.");
-    }
-    pegawaiLogoutBtn.addEventListener("click", logoutPegawaiFlow);
-    mobilePegawaiLogoutBtn.addEventListener("click", (e) => { e.preventDefault(); closeMobileNav(); logoutPegawaiFlow(); });
-
-    // Intercept internal clicks if not pegawai
-    function requirePegawai_(e) {
-      if (isPegawai()) return true;
-      e.preventDefault();
-      openPegawaiModal();
-      return false;
-    }
-
-    // =========================
-    // ADMIN UI + AUTH MODAL
-    // =========================
-    const adminLoginBtn = document.getElementById("adminLoginBtn");
-    const adminLogoutBtn = document.getElementById("adminLogoutBtn");
-    const mobileAdminLoginBtn = document.getElementById("mobileAdminLoginBtn");
-    const mobileAdminLogoutBtn = document.getElementById("mobileAdminLogoutBtn");
-
-    const kelolaAsetSection = document.getElementById("kelola-aset");
-    const inputAsetSection = document.getElementById("input-aset");
-
-    const adminOverlay = document.getElementById("adminModalOverlay");
-    const adminCloseBtn = document.getElementById("adminModalCloseBtn");
-    const adminCancelBtn = document.getElementById("adminModalCancelBtn");
-    const adminForm = document.getElementById("adminLoginForm");
-    const adminEmailInput = document.getElementById("adminEmail");
-    const adminPassInput = document.getElementById("adminPassword");
-    const adminLoginError = document.getElementById("adminLoginError");
-
-    let adminAfterLoginTarget = "";
-
-    function openAdminModal(targetAfterLogin) {
-      adminAfterLoginTarget = targetAfterLogin || "";
-      adminOverlay.classList.add("show");
-      adminOverlay.setAttribute("aria-hidden", "false");
-      adminLoginError.style.display = "none";
-      adminForm.reset();
-      setTimeout(() => adminEmailInput.focus(), 50);
-    }
-    function closeAdminModal() {
-      adminOverlay.classList.remove("show");
-      adminOverlay.setAttribute("aria-hidden", "true");
-    }
-    adminCloseBtn.addEventListener("click", closeAdminModal);
-    adminCancelBtn.addEventListener("click", closeAdminModal);
-    adminOverlay.addEventListener("click", (e) => { if (e.target === adminOverlay) closeAdminModal(); });
-
-    adminLoginBtn.addEventListener("click", () => openAdminModal(""));
-    mobileAdminLoginBtn.addEventListener("click", (e) => { e.preventDefault(); closeMobileNav(); openAdminModal(""); });
-
-    adminForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const email = (adminEmailInput.value || "").trim();
-      const pass = (adminPassInput.value || "").trim();
-      adminLoginError.style.display = "none";
-
-      try {
-        const out = await authLogin(email, pass);
-        if (!out.ok) { adminLoginError.style.display = "block"; return; }
-        setAdminToken(out.sessionToken);
-        closeAdminModal();
-        applyAdminUI();
-
-        if (adminAfterLoginTarget === "input-aset") showInputAsetSection();
-        if (adminAfterLoginTarget === "kelola-aset") goKelolaAset();
-      } catch (err) {
-        adminLoginError.textContent = "Login gagal: " + String(err);
-        adminLoginError.style.display = "block";
-      }
-    });
-
-    async function logoutAdminFlow() {
-      const ok = confirm("Logout admin?");
-      if (!ok) return;
-      forceAdminLogout("manual logout");
-    }
-    adminLogoutBtn.addEventListener("click", logoutAdminFlow);
-    mobileAdminLogoutBtn.addEventListener("click", (e) => { e.preventDefault(); closeMobileNav(); logoutAdminFlow(); });
-
-    // Menu links (internal)
-    const inputAsetLink = document.getElementById("inputAsetLink");
-    const mobileInputAsetLink = document.getElementById("mobileInputAsetLink");
-    const kelolaAsetLink = document.getElementById("kelolaAsetLink");
-    const mobileKelolaAsetLink = document.getElementById("mobileKelolaAsetLink");
-    const requestLink = document.getElementById("requestPerbaikanLink");
-    const mobileRequestPerbaikanLink = document.getElementById("mobileRequestPerbaikanLink");
-
-    function showInputAsetSection() {
-      const asetMsg = document.getElementById("asetMsg");
-      if (asetMsg) { asetMsg.style.display = "none"; asetMsg.textContent = ""; }
-      inputAsetSection.style.display = "block";
-      location.hash = "#input-aset";
-      inputAsetSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-    function goHome() {
-      inputAsetSection.style.display = "none";
-      location.hash = "#beranda";
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-    function goKelolaAset() {
-      kelolaAsetSection.classList.add("show");
-      renderAssetsManager();
-      location.hash = "#kelola-aset";
-      kelolaAsetSection.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-
-    function handleInputAsetClick(e) {
-      if (!requirePegawai_(e)) return;
-      if (isAdminLoggedIn()) showInputAsetSection();
-      else openAdminModal("input-aset");
-    }
-    function handleKelolaAsetClick(e) {
-      if (!requirePegawai_(e)) return;
-      if (isAdminLoggedIn()) goKelolaAset();
-      else openAdminModal("kelola-aset");
-    }
-    function handleRequestClick(e) {
-      if (!requirePegawai_(e)) return;
-      openRequestModal();
-    }
-
-    inputAsetLink.addEventListener("click", handleInputAsetClick);
-    kelolaAsetLink.addEventListener("click", handleKelolaAsetClick);
-    requestLink.addEventListener("click", handleRequestClick);
-
-    mobileInputAsetLink.addEventListener("click", (e) => { e.preventDefault(); closeMobileNav(); handleInputAsetClick(e); });
-    mobileKelolaAsetLink.addEventListener("click", (e) => { e.preventDefault(); closeMobileNav(); handleKelolaAsetClick(e); });
-    mobileRequestPerbaikanLink.addEventListener("click", (e) => { e.preventDefault(); closeMobileNav(); handleRequestClick(e); });
-
-    // Riwayat nav intercept
-    riwayatNavLink.addEventListener("click", (e) => { requirePegawai_(e); });
-    mobileRiwayatNavLink.addEventListener("click", (e) => { if (!requirePegawai_(e)) return; closeMobileNav(); });
-
-    // =========================
-    // Monitoring from localStorage (aset)
-    // =========================
-    function loadAssets() {
-      try { const raw = localStorage.getItem(ASSET_STORAGE_KEY); return raw ? JSON.parse(raw) : []; }
-      catch { return []; }
-    }
-    function saveAssets(assets) { localStorage.setItem(ASSET_STORAGE_KEY, JSON.stringify(assets)); }
-    function computeMonitoringFromAssets(assets) {
-      let baik = 0, perbaiki = 0, rusak = 0;
-      for (const a of assets) {
-        if (a.kondisi === "baik") baik++;
-        else if (a.kondisi === "diperbaiki") perbaiki++;
-        else if (a.kondisi === "rusak") rusak++;
-      }
-      return { total: assets.length, baik, perbaiki, rusak };
-    }
-    function setDonutSegments({ baik, perbaiki, rusak, total }) {
-      const r = 42; const C = 2 * Math.PI * r; const safeTotal = Math.max(total, 1);
-      const pBaik = baik / safeTotal, pPer = perbaiki / safeTotal, pRus = rusak / safeTotal;
-      const lenBaik = C * pBaik, lenPer = C * pPer, lenRus = C * pRus;
-      const segBaik = document.getElementById("seg-baik");
-      const segPer = document.getElementById("seg-perbaiki");
-      const segRus = document.getElementById("seg-rusak");
-      segBaik.style.strokeDasharray = `${lenBaik} ${C - lenBaik}`;
-      segPer.style.strokeDasharray = `${lenPer} ${C - lenPer}`;
-      segRus.style.strokeDasharray = `${lenRus} ${C - lenRus}`;
-      segBaik.style.strokeDashoffset = `0`;
-      segPer.style.strokeDashoffset = `${-lenBaik}`;
-      segRus.style.strokeDashoffset = `${-(lenBaik + lenPer)}`;
-      document.getElementById("legend-baik").textContent = baik;
-      document.getElementById("legend-perbaiki").textContent = perbaiki;
-      document.getElementById("legend-rusak").textContent = rusak;
-      document.getElementById("pct-baik").textContent = `(${Math.round(pBaik * 100)}%)`;
-      document.getElementById("pct-perbaiki").textContent = `(${Math.round(pPer * 100)}%)`;
-      document.getElementById("pct-rusak").textContent = `(${Math.round(pRus * 100)}%)`;
-      document.getElementById("donut-total").textContent = total;
-    }
-    function setMonitoringData({ total, baik, perbaiki, rusak }) {
-      document.getElementById("kpi-total").textContent = total;
-      document.getElementById("kpi-baik").textContent = baik;
-      document.getElementById("kpi-perbaiki").textContent = perbaiki;
-      document.getElementById("kpi-rusak").textContent = rusak;
-      setDonutSegments({ baik, perbaiki, rusak, total });
-    }
-    function refreshMonitoringFromAssets() {
-      const assets = loadAssets();
-      setMonitoringData(computeMonitoringFromAssets(assets));
-    }
-
-    // =========================
-    // ASET (local + admin delete to sheet)
-    // =========================
-    const inputAsetForm = document.getElementById("inputAsetForm");
-    const btnTidakSimpan = document.getElementById("btnTidakSimpan");
-    const asetMsg = document.getElementById("asetMsg");
-    const btnSimpanAset = document.getElementById("btnSimpanAset");
-
-    function showAsetMsg(text, ok) {
-      asetMsg.style.display = "block";
-      asetMsg.style.color = ok ? "#166534" : "#b91c1c";
-      asetMsg.textContent = text;
-    }
-
-    btnTidakSimpan.addEventListener("click", () => { inputAsetForm.reset(); goHome(); });
-
-    function makeAssetId() {
-      if (window.crypto && typeof crypto.randomUUID === "function") return crypto.randomUUID();
-      return "asset_" + Date.now() + "_" + Math.random().toString(16).slice(2);
-    }
-
-    inputAsetForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      if (!isPegawai()) { openPegawaiModal(); return; }
-      if (!isAdminLoggedIn()) { showAsetMsg("Akses ditolak. Silakan login admin.", false); openAdminModal("input-aset"); return; }
-      if (!ASSET_API_URL) { showAsetMsg("ASSET_API_URL belum diisi.", false); return; }
-
-      const ok = confirm("Simpan data aset ke Google Spreadsheet?");
-      if (!ok) return;
-
-      const assetId = makeAssetId();
-      const payload = {
-        mode: "create",
-        sessionToken: getAdminToken(),
-        assetId,
-        namaAset: document.getElementById("asetNama").value.trim(),
-        merek: document.getElementById("merek").value.trim(),
-        lokasiAset: document.getElementById("asetLokasi").value.trim(),
-        kondisi: document.getElementById("asetKondisi").value,
-        keterangan: document.getElementById("asetKeterangan").value.trim()
-      };
-
-      btnSimpanAset.disabled = true;
-      btnSimpanAset.textContent = "Menyimpan...";
-
-      try {
-        const data = await guardUnauthorizedAdmin(apiPost(payload));
-        if (!data.ok) { showAsetMsg("Gagal menyimpan: " + (data.error || "Unknown error"), false); return; }
-
-        const assets = loadAssets();
-        assets.unshift({
-          assetId,
-          tanggal: new Date().toISOString(),
-          namaAset: payload.namaAset,
-          merek: payload.merek,
-          lokasiAset: payload.lokasiAset,
-          kondisi: payload.kondisi,
-          keterangan: payload.keterangan
-        });
-        saveAssets(assets);
-
-        refreshMonitoringFromAssets();
-        renderAssetsManager();
-
-        showAsetMsg("Berhasil disimpan.", true);
-        inputAsetForm.reset();
-        setTimeout(goHome, 500);
-      } catch (err) {
-        showAsetMsg("Gagal menyimpan: " + String(err), false);
-      } finally {
-        btnSimpanAset.disabled = false;
-        btnSimpanAset.textContent = "Simpan";
-      }
-    });
-
-    // Kelola aset
-    const assetsTbody = document.getElementById("assetsTbody");
-    const selectAllAssetsBtn = document.getElementById("selectAllAssetsBtn");
-    const unselectAllAssetsBtn = document.getElementById("unselectAllAssetsBtn");
-    const deleteSelectedAssetsBtn = document.getElementById("deleteSelectedAssetsBtn");
-
-    function renderAssetsManager() {
-      if (!isPegawai()) {
-        assetsTbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:#6b7280;padding:18px;white-space:normal;">Silakan login pegawai untuk mengakses fitur internal.</td></tr>`;
-        return;
-      }
-      if (!isAdminLoggedIn()) {
-        assetsTbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:#6b7280;padding:18px;white-space:normal;">Silakan login admin untuk melihat data aset.</td></tr>`;
-        return;
-      }
-      const assets = loadAssets();
-      assetsTbody.innerHTML = "";
-      if (assets.length === 0) {
-        assetsTbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:#6b7280;padding:18px;white-space:normal;">Belum ada data aset (lokal).</td></tr>`;
-        return;
-      }
-      assets.forEach((a, idx) => {
-        const tr = document.createElement("tr");
-        const chipClass = a.kondisi === "baik" ? "baik" : (a.kondisi === "diperbaiki" ? "diperbaiki" : "rusak");
-        tr.innerHTML = `
-          <td><input type="checkbox" class="asset-checkbox" data-index="${idx}"></td>
-          <td>${escapeHtml(a.assetId || "-")}</td>
-          <td>${formatIso(a.tanggal)}</td>
-          <td class="wrap">${escapeHtml(a.namaAset || "-")}</td>
-          <td class="wrap">${escapeHtml(a.merek || "-")}</td>
-          <td class="wrap">${escapeHtml(a.lokasiAset || "-")}</td>
-          <td><span class="chip ${chipClass}">${escapeHtml(a.kondisi || "-")}</span></td>
-          <td class="wrap">${escapeHtml(a.keterangan || "-")}</td>
-        `;
-        assetsTbody.appendChild(tr);
-      });
-    }
-
-    function setAllAssetCheckboxes(checked) { document.querySelectorAll(".asset-checkbox").forEach(c => { c.checked = checked; }); }
-    function getSelectedAssetIndexes() {
-      return Array.from(document.querySelectorAll(".asset-checkbox"))
-        .filter(c => c.checked)
-        .map(c => Number(c.getAttribute("data-index")))
-        .filter(n => Number.isFinite(n));
-    }
-    selectAllAssetsBtn.addEventListener("click", () => { if (isAdminLoggedIn()) setAllAssetCheckboxes(true); });
-    unselectAllAssetsBtn.addEventListener("click", () => { if (isAdminLoggedIn()) setAllAssetCheckboxes(false); });
-
-    deleteSelectedAssetsBtn.addEventListener("click", async () => {
-      if (!isPegawai()) { openPegawaiModal(); return; }
-      if (!isAdminLoggedIn()) { alert("Akses ditolak. Silakan login admin."); openAdminModal("kelola-aset"); return; }
-
-      const selected = getSelectedAssetIndexes();
-      if (selected.length === 0) { alert("Belum ada aset yang dipilih."); return; }
-
-      const ok = confirm(`Yakin hapus ${selected.length} aset? Ini akan menghapus di Sheet dan lokal.`);
-      if (!ok) return;
-
-      const assets = loadAssets();
-      const idxDesc = [...selected].sort((a,b)=>b-a);
-
-      deleteSelectedAssetsBtn.disabled = true;
-      const oldText = deleteSelectedAssetsBtn.textContent;
-      deleteSelectedAssetsBtn.textContent = "Menghapus...";
-
-      try {
-        for (const idx of idxDesc) {
-          const assetId = String((assets[idx] || {}).assetId || "").trim();
-          if (!assetId) continue;
-
-          const out = await guardUnauthorizedAdmin(apiPost({ mode: "delete", sessionToken: getAdminToken(), assetId }));
-          if (!out.ok) { alert("Gagal hapus assetId: " + assetId + "\n" + (out.error || "Unknown error")); return; }
-        }
-
-        for (const idx of idxDesc) assets.splice(idx, 1);
-        saveAssets(assets);
-
-        renderAssetsManager();
-        refreshMonitoringFromAssets();
-        alert("Berhasil menghapus.");
-      } catch (err) {
-        alert("Error hapus: " + String(err));
-      } finally {
-        deleteSelectedAssetsBtn.disabled = false;
-        deleteSelectedAssetsBtn.textContent = oldText || "Hapus yang Dipilih";
-      }
-    });
-
-    // =========================
-    // PENGAJUAN PERBAIKAN
-    // =========================
-    const requestOverlay = document.getElementById("requestModalOverlay");
-    const requestCloseBtn = document.getElementById("requestModalCloseBtn");
-    const requestCancelBtn = document.getElementById("requestModalCancelBtn");
-    const requestForm = document.getElementById("requestPerbaikanForm");
-    const fotoInput = document.getElementById("fotoAset");
-    const previewWrap = document.getElementById("fotoPreview");
-    const previewImg = document.getElementById("fotoPreviewImg");
-    const btnKirimRequest = document.getElementById("btnKirimRequest");
-
-    function openRequestModal() {
-      requestOverlay.classList.add("show");
-      requestOverlay.setAttribute("aria-hidden", "false");
-      setTimeout(() => document.getElementById("namaPemohon")?.focus(), 50);
-    }
-    function closeRequestModal() {
-      requestOverlay.classList.remove("show");
-      requestOverlay.setAttribute("aria-hidden", "true");
-    }
-
-    requestCloseBtn.addEventListener("click", closeRequestModal);
-    requestCancelBtn.addEventListener("click", closeRequestModal);
-    requestOverlay.addEventListener("click", (e) => { if (e.target === requestOverlay) closeRequestModal(); });
-
-    fotoInput.addEventListener("change", () => {
-      const file = fotoInput.files && fotoInput.files[0];
-      if (!file) { previewWrap.classList.remove("show"); previewImg.removeAttribute("src"); return; }
-      const url = URL.createObjectURL(file);
-      previewImg.src = url;
-      previewWrap.classList.add("show");
-    });
-
-    requestForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      if (!isPegawai()) { openPegawaiModal(); return; }
-      if (!ASSET_API_URL) { alert("ASSET_API_URL belum diisi."); return; }
-
-      const data = new FormData(requestForm);
-      const file = fotoInput.files && fotoInput.files[0];
-      if (!file) { alert("Foto wajib diisi."); return; }
-
-      btnKirimRequest.disabled = true;
-      btnKirimRequest.textContent = "Mengirim...";
-
-      try {
-        const fotoBase64 = await compressImageToDataUrl(file, 200, 0.7);
-        const payload = {
-          mode: "reportCreate",
-          // IMPORTANT: server-side pegawai guard (butuh Apps Script update)
-          pegawaiToken: getPegawaiToken(),
-          namaPemohon: String(data.get("namaPemohon") || "").trim(),
-          namaAset: String(data.get("namaAset") || "").trim(),
-          lokasiAset: String(data.get("lokasiAset") || "").trim(),
-          tingkat: String(data.get("tingkatKerusakan") || "").trim(),
-          deskripsi: String(data.get("deskripsiKerusakan") || "").trim(),
-          fotoBase64
-        };
-
-        const out = await guardUnauthorizedPegawai(apiPost(payload));
-        if (!out.ok) { alert("Gagal kirim pengajuan: " + (out.error || "Unknown error")); return; }
-
-        requestForm.reset();
-        previewWrap.classList.remove("show");
-        previewImg.removeAttribute("src");
-        closeRequestModal();
-
-        await refreshReports();
-        alert("Pengajuan perbaikan berhasil dikirim.");
-      } catch (err) {
-        alert("Error saat kirim pengajuan: " + String(err));
-      } finally {
-        btnKirimRequest.disabled = false;
-        btnKirimRequest.textContent = "Kirim Pengajuan";
-      }
-    });
-
-    // =========================
-    // REPORTS
-    // =========================
-    const reportsTbody = document.getElementById("reportsTbody");
-    const clearReportsBtn = document.getElementById("clearReportsBtn");
-    const reportsCards = document.getElementById("reportsCards");
-    const selectAllReportsBtn = document.getElementById("selectAllReportsBtn");
-    const deleteSelectedReportsBtn = document.getElementById("deleteSelectedReportsBtn");
-    const deleteAllReportsBtn = document.getElementById("deleteAllReportsBtn");
-
-    async function fetchReportsFromSheet() {
-      // IMPORTANT: server-side pegawai guard (butuh Apps Script update)
-      const data = await guardUnauthorizedPegawai(apiPost({ mode: "reportList", pegawaiToken: getPegawaiToken() }));
-      if (!data.ok) throw new Error(data.error || "Gagal mengambil laporan");
-      return Array.isArray(data.reports) ? data.reports : [];
-    }
-
-    function setAllReportCheckboxes(checked) { document.querySelectorAll(".report-checkbox").forEach(cb => { cb.checked = checked; }); }
-    function getSelectedReportIds() {
-      return Array.from(document.querySelectorAll(".report-checkbox"))
-        .filter(cb => cb.checked)
-        .map(cb => cb.getAttribute("data-reportid"))
-        .filter(Boolean);
-    }
-    function bindReportCheckboxSync() {
-      document.querySelectorAll(".report-checkbox").forEach(cb => {
-        cb.addEventListener("change", (e) => {
-          const id = e.target.getAttribute("data-reportid");
-          const checked = e.target.checked;
-          if (!id) return;
-          const selector = `.report-checkbox[data-reportid="${CSS.escape(id)}"]`;
-          document.querySelectorAll(selector).forEach(x => { if (x !== e.target) x.checked = checked; });
-        });
-      });
-    }
-
-    async function deleteManyReportsFromSheet(reportIds) {
-      return guardUnauthorizedAdmin(apiPost({ mode: "reportDeleteMany", sessionToken: getAdminToken(), reportIds }));
-    }
-    async function deleteAllReportsFromSheet() {
-      return guardUnauthorizedAdmin(apiPost({ mode: "reportDeleteAll", sessionToken: getAdminToken() }));
-    }
-
-    function renderReportsFromData(reports) {
-      reportsTbody.innerHTML = "";
-      reportsCards.innerHTML = "";
-
-      if (!reports || reports.length === 0) {
-        reportsTbody.innerHTML = `<tr><td colspan="10" style="text-align:center;color:#6b7280;padding:18px;">Belum ada laporan.</td></tr>`;
-        reportsCards.innerHTML = `<div style="text-align:center;color:#6b7280;font-weight:900;padding:12px;">Belum ada laporan.</div>`;
-        return;
-      }
-
-      const isAdmin = isAdminLoggedIn();
-
-      // Desktop
-      reports.forEach((r) => {
-        const status = normalizeStatus(r.status || "Dilaporkan");
-        const tingkat = String(r.tingkat || "").toLowerCase();
-        const badgeClass = tingkat === "ringan" ? "ringan" : (tingkat === "sedang" ? "sedang" : "berat");
-
-        const fotoUrl = driveViewUrlFromFileId(r.fotoFileId);
-
-        const fotoCell = fotoUrl
-          ? `<a href="${escapeHtml(fotoUrl)}" target="_blank" rel="noopener noreferrer">Buka Foto</a>`
-          : "-";
-
-        const statusCell = `<span class="status-badge ${getStatusClass(status)}">${escapeHtml(status)}</span>`;
-
-        const selectCell = isAdmin
-          ? `<input type="checkbox" class="report-checkbox" data-reportid="${escapeHtml(r.reportId)}">`
-          : `<span style="color:#64748b;font-weight:900;">-</span>`;
-
-        const adminActionCell = isAdmin
-          ? `<select class="report-status-select" data-reportid="${escapeHtml(r.reportId)}">
-               <option value="Dilaporkan" ${status === "Dilaporkan" ? "selected" : ""}>Dilaporkan</option>
-               <option value="Proses" ${status === "Proses" ? "selected" : ""}>Proses</option>
-               <option value="Sudah di perbaiki" ${status === "Sudah di perbaiki" ? "selected" : ""}>Sudah di perbaiki</option>
-             </select>`
-          : `<span style="color:#64748b;font-weight:900;">-</span>`;
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${selectCell}</td>
-          <td>${escapeHtml(r.tanggal || "-")}</td>
-          <td>${escapeHtml(r.namaPemohon || "-")}</td>
-          <td>${escapeHtml(r.namaAset || "-")}</td>
-          <td>${escapeHtml(r.lokasiAset || "-")}</td>
-          <td><span class="badge ${badgeClass}">${escapeHtml(tingkat || "-")}</span></td>
-          <td>${statusCell}</td>
-          <td>${escapeHtml(r.deskripsi || "-")}</td>
-          <td>${fotoCell}</td>
-          <td>${adminActionCell}</td>
-        `;
-        reportsTbody.appendChild(tr);
-      });
-
-      // Mobile cards
-      reports.forEach((r) => {
-        const status = normalizeStatus(r.status || "Dilaporkan");
-        const tingkat = String(r.tingkat || "").toLowerCase();
-        const badgeClass = tingkat === "ringan" ? "ringan" : (tingkat === "sedang" ? "sedang" : "berat");
-
-        const fotoUrl = driveViewUrlFromFileId(r.fotoFileId);
-
-        const fotoBlock = fotoUrl
-          ? `<div class="rc-row"><div class="k">Foto</div><div class="v">
-               <a href="${escapeHtml(fotoUrl)}" target="_blank" rel="noopener noreferrer">Buka Foto</a>
-             </div></div>`
-          : `<div class="rc-row"><div class="k">Foto</div><div class="v">-</div></div>`;
-
-        const selectBlock = isAdmin
-          ? `<div class="rc-row">
-               <div class="k">Pilih</div>
-               <div class="v rc-select">
-                 <label for="rcb_${escapeHtml(r.reportId)}">Centang</label>
-                 <input id="rcb_${escapeHtml(r.reportId)}" type="checkbox" class="report-checkbox" data-reportid="${escapeHtml(r.reportId)}">
-               </div>
-             </div>`
-          : ``;
-
-        const actionBlock = isAdmin
-          ? `<div class="rc-row"><div class="k">Aksi</div><div class="v">
-               <select class="report-status-select" data-reportid="${escapeHtml(r.reportId)}">
-                 <option value="Dilaporkan" ${status === "Dilaporkan" ? "selected" : ""}>Dilaporkan</option>
-                 <option value="Proses" ${status === "Proses" ? "selected" : ""}>Proses</option>
-                 <option value="Sudah di perbaiki" ${status === "Sudah di perbaiki" ? "selected" : ""}>Sudah di perbaiki</option>
-               </select>
-             </div></div>`
-          : `<div class="rc-row"><div class="k">Aksi</div><div class="v">-</div></div>`;
-
-        const card = document.createElement("div");
-        card.className = "report-card";
-        card.innerHTML = `
-          <div class="rc-head">
-            <div class="date">${escapeHtml(r.tanggal || "-")}</div>
-            <div class="meta">
-              <span class="status-badge ${getStatusClass(status)}">${escapeHtml(status)}</span>
-              <span class="badge ${badgeClass}">${escapeHtml(tingkat || "-")}</span>
-            </div>
-          </div>
-          <div class="rc-body">
-            <div class="rc-row"><div class="k">Pemohon</div><div class="v">${escapeHtml(r.namaPemohon || "-")}</div></div>
-            <div class="rc-row"><div class="k">Nama Aset</div><div class="v">${escapeHtml(r.namaAset || "-")}</div></div>
-            <div class="rc-row"><div class="k">Lokasi</div><div class="v">${escapeHtml(r.lokasiAset || "-")}</div></div>
-            <div><div class="k" style="margin-bottom:6px;">Deskripsi</div><div class="rc-desc">${escapeHtml(r.deskripsi || "-")}</div></div>
-            ${fotoBlock}
-            ${selectBlock}
-            ${actionBlock}
-          </div>
-        `;
-        reportsCards.appendChild(card);
-      });
-
-      // Bind admin events
-      if (isAdminLoggedIn()) {
-        document.querySelectorAll(".report-status-select").forEach(sel => {
-          sel.addEventListener("change", async (e) => {
-            const reportId = e.target.getAttribute("data-reportid");
-            const status = normalizeStatus(e.target.value);
-            try {
-              const out = await guardUnauthorizedAdmin(apiPost({ mode: "reportUpdateStatus", sessionToken: getAdminToken(), reportId, status }));
-              if (!out.ok) throw new Error(out.error || "Gagal update status");
-              await refreshReports();
-            } catch (err) {
-              alert("Gagal update status: " + String(err));
-            }
-          });
-        });
-
-        bindReportCheckboxSync();
-      }
-    }
-
-    async function refreshReports() {
-      if (!isPegawai()) return;
-      const reports = await fetchReportsFromSheet();
-      renderReportsFromData(reports);
-    }
-
-    clearReportsBtn.addEventListener("click", async () => {
-      if (!isPegawai()) { openPegawaiModal(); return; }
-      try { await refreshReports(); }
-      catch (err) { alert("Gagal refresh: " + String(err)); }
-    });
-
-    selectAllReportsBtn.addEventListener("click", () => { if (isAdminLoggedIn()) setAllReportCheckboxes(true); });
-
-    deleteSelectedReportsBtn.addEventListener("click", async () => {
-      if (!isAdminLoggedIn()) return;
-
-      const ids = getSelectedReportIds();
-      if (ids.length === 0) { alert("Belum ada laporan yang dipilih."); return; }
-
-      const ok = confirm(`Yakin hapus ${ids.length} laporan yang dipilih?`);
-      if (!ok) return;
-
-      deleteSelectedReportsBtn.disabled = true;
-      const old = deleteSelectedReportsBtn.innerHTML;
-      deleteSelectedReportsBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Menghapus...`;
-
-      try {
-        const out = await deleteManyReportsFromSheet(ids);
-        if (!out.ok) throw new Error(out.error || "Gagal menghapus");
-        await refreshReports();
-        alert(`Berhasil menghapus ${out.deleted || 0} laporan.`);
-      } catch (err) {
-        alert("Gagal hapus laporan: " + String(err));
-      } finally {
-        deleteSelectedReportsBtn.disabled = false;
-        deleteSelectedReportsBtn.innerHTML = old;
-      }
-    });
-
-    deleteAllReportsBtn.addEventListener("click", async () => {
-      if (!isAdminLoggedIn()) return;
-
-      const ok = confirm("Yakin hapus SEMUA riwayat laporan?");
-      if (!ok) return;
-
-      deleteAllReportsBtn.disabled = true;
-      const old = deleteAllReportsBtn.innerHTML;
-      deleteAllReportsBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Menghapus...`;
-
-      try {
-        const out = await deleteAllReportsFromSheet();
-        if (!out.ok) throw new Error(out.error || "Gagal menghapus semua");
-        await refreshReports();
-        alert(`Semua riwayat terhapus (${out.deleted || 0} baris).`);
-      } catch (err) {
-        alert("Gagal hapus semua: " + String(err));
-      } finally {
-        deleteAllReportsBtn.disabled = false;
-        deleteAllReportsBtn.innerHTML = old;
-      }
-    });
-
-    // =========================
-    // APPLY ADMIN UI + INIT
-    // =========================
-    function applyAdminUI() {
-      const ok = isAdminLoggedIn();
-
-      // Admin-only reports controls
-      selectAllReportsBtn.style.display = ok ? "inline-flex" : "none";
-      deleteSelectedReportsBtn.style.display = ok ? "inline-flex" : "none";
-      deleteAllReportsBtn.style.display = ok ? "inline-flex" : "none";
-
-      renderAssetsManager();
-      refreshReports().catch(()=>{});
-      applyPegawaiUI(); // keep buttons consistent
-    }
-
-    // INIT
-    (async function init() {
-      refreshMonitoringFromAssets();
-
-      // Validate existing sessions
-      await verifyPegawaiTokenOnLoad();
-      await verifyAdminTokenOnLoad();
-
-      applyPegawaiUI();
-      applyAdminUI();
-
-      // If already logged in pegawai, load reports
-      refreshReports().catch(()=>{});
-    })();
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
