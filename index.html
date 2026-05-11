@@ -1,3 +1,4 @@
+<!-- Mengatur struktur dasar HTML, metadata, judul tab, serta memuat font, ikon, dan CSS -->
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -5,13 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SINATRIA | Rutan Kelas IIB Pandeglang</title>
 
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
   
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <nav>
+  <!-- Mengatur navigasi utama (Navbar) di bagian atas halaman beserta logo dan menu -->
+  <nav id="mainNav">
     <div class="brand">
       <img class="brand-logo" src="https://drive.google.com/thumbnail?id=1sDQZytdf6HV0uqP5FoN8oBqmayJLMDnW&sz=w1000" alt="Logo SINATRIA" />
       <div class="logo-text">SINATRIA</div>
@@ -49,6 +52,7 @@
     </ul>
   </nav>
 
+  <!-- Mengatur menu navigasi samping untuk tampilan layar kecil (mobile) -->
   <div class="mobile-nav" id="mobileNav" aria-hidden="true">
     <div class="mobile-nav-panel" role="dialog" aria-modal="true" aria-label="Menu navigasi">
       <div class="mobile-nav-header">
@@ -73,12 +77,14 @@
     </div>
   </div>
 
+  <!-- Mengatur banner utama (Hero Section) sebagai penyambutan awal halaman -->
   <section class="hero" id="beranda">
     <h1>Digitalisasi Pengelolaan Aset</h1>
     <p>Mewujudkan tata kelola fasilitas umum yang transparan, akuntabel, dan terintegrasi di lingkungan Rutan Kelas IIB Pandeglang melalui sistem pemantauan real-time.</p>
     <a href="#about" class="btn"><i class="fas fa-arrow-down"></i> Pelajari Selengkapnya</a>
   </section>
 
+  <!-- Mengatur bagian "Tentang" yang berisi deskripsi singkat platform -->
   <section id="about" style="background-image: url('https://drive.google.com/thumbnail?id=1SX5C8C60Z_ay9TsTrcUSD4m5BcE0m81t&sz=w2000');">
     <div class="about-overlay-content">
       <h2>Tentang SINATRIA</h2>
@@ -87,6 +93,7 @@
     </div>
   </section>
 
+  <!-- Mengatur dashboard monitoring (statistik dan diagram kondisi aset) -->
   <section class="monitoring" id="monitoring">
     <h2>Monitoring Aset</h2>
     <p>Pantauan ringkas kondisi aset: total, baik, sedang diperbaiki, dan rusak.</p>
@@ -100,9 +107,9 @@
           <div class="donut-wrap" aria-label="Diagram lingkaran kondisi aset">
             <svg class="donut-svg" viewBox="0 0 120 120" role="img">
               <circle class="donut-bg" cx="60" cy="60" r="42"></circle>
-              <circle id="seg-baik" class="donut-seg" cx="60" cy="60" r="42" stroke="#28a745"></circle>
-              <circle id="seg-perbaiki" class="donut-seg" cx="60" cy="60" r="42" stroke="#ffc107"></circle>
-              <circle id="seg-rusak" class="donut-seg" cx="60" cy="60" r="42" stroke="#dc3545"></circle>
+              <circle id="seg-baik" class="donut-seg" cx="60" cy="60" r="42" stroke="#10b981"></circle>
+              <circle id="seg-perbaiki" class="donut-seg" cx="60" cy="60" r="42" stroke="#f59e0b"></circle>
+              <circle id="seg-rusak" class="donut-seg" cx="60" cy="60" r="42" stroke="#ef4444"></circle>
             </svg>
             <div class="donut-center">
               <div class="big" id="donut-total">0</div>
@@ -111,15 +118,15 @@
           </div>
           <div class="legend" aria-label="Legenda diagram">
             <div class="legend-item">
-              <div class="legend-left"><span class="dot" style="background:#28a745;"></span><span class="legend-name">Baik</span></div>
+              <div class="legend-left"><span class="dot" style="background:#10b981;"></span><span class="legend-name">Baik</span></div>
               <div><span class="legend-val" id="legend-baik">0</span><span class="legend-pct" id="pct-baik">(0%)</span></div>
             </div>
             <div class="legend-item">
-              <div class="legend-left"><span class="dot" style="background:#ffc107;"></span><span class="legend-name">Diperbaiki</span></div>
+              <div class="legend-left"><span class="dot" style="background:#f59e0b;"></span><span class="legend-name">Diperbaiki</span></div>
               <div><span class="legend-val" id="legend-perbaiki">0</span><span class="legend-pct" id="pct-perbaiki">(0%)</span></div>
             </div>
             <div class="legend-item">
-              <div class="legend-left"><span class="dot" style="background:#dc3545;"></span><span class="legend-name">Rusak</span></div>
+              <div class="legend-left"><span class="dot" style="background:#ef4444;"></span><span class="legend-name">Rusak</span></div>
               <div><span class="legend-val" id="legend-rusak">0</span><span class="legend-pct" id="pct-rusak">(0%)</span></div>
             </div>
           </div>
@@ -134,12 +141,12 @@
     </div>
   </section>
 
+  <!-- Mengatur galeri dokumentasi foto dengan fitur slider/gambar bergeser -->
   <section class="gallery" id="galeri">
     <h2>Galeri Fasilitas Rutan</h2>
     <p>Dokumentasi fasilitas dan lingkungan Rutan Kelas IIB Pandeglang. Geser foto untuk melihat detail.</p>
 
     <div class="gallery-grid" id="galleryGrid">
-      
       <div class="gallery-item">
         <div class="slider-container">
           <div class="slider-wrapper" id="slider-1">
@@ -227,9 +234,9 @@
       <div class="gallery-item">
         <div class="slider-container">
           <div class="slider-wrapper" id="slider-7">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_7A&sz=w800" alt="Foto 1">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_7B&sz=w800" alt="Foto 2">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_7C&sz=w800" alt="Foto 3">
+            <img src="https://drive.google.com/thumbnail?id=1XfQ119-FflJfwDQ2G5U_XriGDBdXeRIe&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=1o3yIIumziIL-ffArHgQZWiedj_mwvSTa&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=1sUXTKaZOlb0hqgoRcH2BZYnudZDSOCTv&sz=w800" alt="Foto 3">
           </div>
           <button class="slider-btn prev" onclick="moveSlide('slider-7', -1)">&#10094;</button>
           <button class="slider-btn next" onclick="moveSlide('slider-7', 1)">&#10095;</button>
@@ -241,9 +248,9 @@
       <div class="gallery-item">
         <div class="slider-container">
           <div class="slider-wrapper" id="slider-8">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_8A&sz=w800" alt="Foto 1">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_8B&sz=w800" alt="Foto 2">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_8C&sz=w800" alt="Foto 3">
+            <img src="https://drive.google.com/thumbnail?id=1BRYzhF9iohl7s95LweNUqZ8ftI7lMVzu&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=1Y4IKo6DGk2miLJP06c6jDwZ4nJmXsqF4&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=1LW5t9qAc-pQ0LK7XhIdjE74y5TTn98Kb&sz=w800" alt="Foto 3">
           </div>
           <button class="slider-btn prev" onclick="moveSlide('slider-8', -1)">&#10094;</button>
           <button class="slider-btn next" onclick="moveSlide('slider-8', 1)">&#10095;</button>
@@ -255,9 +262,9 @@
       <div class="gallery-item">
         <div class="slider-container">
           <div class="slider-wrapper" id="slider-9">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_9A&sz=w800" alt="Foto 1">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_9B&sz=w800" alt="Foto 2">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_9C&sz=w800" alt="Foto 3">
+            <img src="https://drive.google.com/thumbnail?id=1YKoflA3Ya_XWi_gniJ8PoMDzFSkJPtIA&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=1J6loY1qHrv6YzMP2KXx63nSiJ9gDzl6c&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=1RsDYpTSNnzODWePzIYHxOfDuWKyfc4Sc&sz=w800" alt="Foto 3">
           </div>
           <button class="slider-btn prev" onclick="moveSlide('slider-9', -1)">&#10094;</button>
           <button class="slider-btn next" onclick="moveSlide('slider-9', 1)">&#10095;</button>
@@ -269,9 +276,9 @@
       <div class="gallery-item">
         <div class="slider-container">
           <div class="slider-wrapper" id="slider-10">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_10A&sz=w800" alt="Foto 1">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_10B&sz=w800" alt="Foto 2">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_10C&sz=w800" alt="Foto 3">
+            <img src="https://drive.google.com/thumbnail?id=1dxMsfg8KEJ89Vg3kYSmIxEH0BHUQPuiu&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=1kHAqf6TUB3IZifFP93T_jZQAHKCJzj_l&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=1-inzeYdRPL9j0FsVJk74MR6ZfYKkhbAv&sz=w800" alt="Foto 3">
           </div>
           <button class="slider-btn prev" onclick="moveSlide('slider-10', -1)">&#10094;</button>
           <button class="slider-btn next" onclick="moveSlide('slider-10', 1)">&#10095;</button>
@@ -283,9 +290,9 @@
       <div class="gallery-item">
         <div class="slider-container">
           <div class="slider-wrapper" id="slider-11">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_11A&sz=w800" alt="Foto 1">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_11B&sz=w800" alt="Foto 2">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_11C&sz=w800" alt="Foto 3">
+            <img src="https://drive.google.com/thumbnail?id=1AWSHjWSem3I92TJEJmExj1JHlFhXyg6L&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=1-JWDtU1RBOU9ZBZC8gqOd57XrfxJqyOV&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=1qI3BuPQxMdFL26VONY3hxsqBdliQDVV9&sz=w800" alt="Foto 3">
           </div>
           <button class="slider-btn prev" onclick="moveSlide('slider-11', -1)">&#10094;</button>
           <button class="slider-btn next" onclick="moveSlide('slider-11', 1)">&#10095;</button>
@@ -297,9 +304,9 @@
       <div class="gallery-item">
         <div class="slider-container">
           <div class="slider-wrapper" id="slider-12">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_12A&sz=w800" alt="Foto 1">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_12B&sz=w800" alt="Foto 2">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_12C&sz=w800" alt="Foto 3">
+            <img src="https://drive.google.com/thumbnail?id=1Twv7Kx4JgXlzUiw46VPLOHM8YnL5jpG2&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=14E9g0W91tFdIiGOQCayiSZQ4T-Tm6CvQ&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=153S8r6N29GzqyWaV5nXKM5UVAoPp9pQa&sz=w800" alt="Foto 3">
           </div>
           <button class="slider-btn prev" onclick="moveSlide('slider-12', -1)">&#10094;</button>
           <button class="slider-btn next" onclick="moveSlide('slider-12', 1)">&#10095;</button>
@@ -311,9 +318,9 @@
       <div class="gallery-item">
         <div class="slider-container">
           <div class="slider-wrapper" id="slider-13">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_13A&sz=w800" alt="Foto 1">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_13B&sz=w800" alt="Foto 2">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_13C&sz=w800" alt="Foto 3">
+            <img src="https://drive.google.com/thumbnail?id=1vSHO2GlWR938gfOiGbTzu_cXsvQD67f0&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=1HXWs3Eq38-w1ZkDQJP1Z8ypEBDkOLNIJ&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=1MBO6mijxklET1hls4TkTplb764AZSGgb&sz=w800" alt="Foto 3">
           </div>
           <button class="slider-btn prev" onclick="moveSlide('slider-13', -1)">&#10094;</button>
           <button class="slider-btn next" onclick="moveSlide('slider-13', 1)">&#10095;</button>
@@ -325,9 +332,9 @@
       <div class="gallery-item">
         <div class="slider-container">
           <div class="slider-wrapper" id="slider-14">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_14A&sz=w800" alt="Foto 1">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_14B&sz=w800" alt="Foto 2">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_14C&sz=w800" alt="Foto 3">
+            <img src="https://drive.google.com/thumbnail?id=1UIm5Q-YpF9I_T9wHKKhRewtZirS7MRWf&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=1Lgzh21ZUxkFEwhhuQPOzvLlfT7SUfLnW&sz=w800" alt="Foto 2">
+            <img src="https://drive.google.com/thumbnail?id=1Yil9zZTXqtdtcGhmDvdVyJrVKl_JDrFc&sz=w800" alt="Foto 3">
           </div>
           <button class="slider-btn prev" onclick="moveSlide('slider-14', -1)">&#10094;</button>
           <button class="slider-btn next" onclick="moveSlide('slider-14', 1)">&#10095;</button>
@@ -339,20 +346,20 @@
       <div class="gallery-item">
         <div class="slider-container">
           <div class="slider-wrapper" id="slider-15">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_15A&sz=w800" alt="Foto 1">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_15B&sz=w800" alt="Foto 2">
-            <img src="https://drive.google.com/thumbnail?id=FILE_ID_15C&sz=w800" alt="Foto 3">
+            <img src="https://drive.google.com/thumbnail?id=1wsilNAgpjW4X4Wk07As6XFNoHhe2d5h0&sz=w800" alt="Foto 1">
+            <img src="https://drive.google.com/thumbnail?id=1MWNvbNf6pYIrBwiwOTK_BtOIcAXNnKI1&sz=w800" alt="Foto 2">
           </div>
           <button class="slider-btn prev" onclick="moveSlide('slider-15', -1)">&#10094;</button>
           <button class="slider-btn next" onclick="moveSlide('slider-15', 1)">&#10095;</button>
         </div>
-        <div class="cap">Fasilitas Lainnya</div>
-        <div class="desc">Berbagai sarana pendukung tambahan lainnya yang terus kami kembangkan guna meningkatkan kualitas pelayanan prima Rutan Pandeglang.</div>
+        <div class="cap">Fasilitas Lainya</div>
+        <div class="desc">Tersedia loker penyimpanan barang yang aman serta layanan minuman gratis bagi pengunjung di Rutan Kelas IIB Pandeglang.</div>
       </div>
-
+      
     </div>
   </section>
 
+  <!-- Mengatur tabel data aset beserta fungsi pilih/hapus (Khusus Admin) -->
   <section class="assets" id="kelola-aset">
     <h2>Kelola Aset (Admin)</h2>
     <div class="panel">
@@ -384,6 +391,7 @@
     </div>
   </section>
 
+  <!-- Mengatur formulir penambahan/input data aset baru (Khusus Admin) -->
   <section class="about" id="input-aset" style="display:none;">
     <h2>Input Aset (Admin)</h2>
     <p>Isi data aset lalu klik Simpan.</p>
@@ -406,6 +414,7 @@
     </div>
   </section>
 
+  <!-- Mengatur tabel riwayat daftar laporan perbaikan yang diajukan -->
   <section class="reports" id="riwayat">
     <h2>Riwayat Laporan Pengajuan Perbaikan</h2>
     <div class="table-wrap">
@@ -431,15 +440,17 @@
     </div>
   </section>
 
+  <!-- Mengatur bagian kaki halaman (Footer) untuk informasi kontak dan copyright -->
   <footer>
     <div class="footer-content">
-      <div class="footer-section"><h4>Rutan Kelas IIB Pandeglang</h4><p>Jl. Raya Serang No. 02, Kadumerak, Karang Tanjung, Kabupaten Pandeglang, Banten 42211.</p></div>
+      <div class="footer-section"><h4>Rutan Kelas IIB Pandeglang</h4><p>Jl. Mesjid Agung No. 03, Kabupaten Pandeglang, Banten 42211.</p></div>
       <div class="footer-section"><h4>Slogan Pelayanan</h4><p class="pasti-slogan">"PASTI"</p><p>Profesional, Akuntabel, Sinergi, Transparan, Inovatif.</p></div>
       <div class="footer-section"><h4>Tautan Cepat</h4><p><i class="fas fa-arrow-right"></i> Dashboard Monitoring</p><p><i class="fas fa-arrow-right"></i> Pengajuan Perbaikan</p></div>
     </div>
     <div class="copyright">&copy; 2026 SINATRIA Rutan Pandeglang. All Rights Reserved.</div>
   </footer>
 
+  <!-- Mengatur jendela popup (Modal) untuk formulir lapor kerusakan/perbaikan aset -->
   <div class="modal-overlay" id="requestModalOverlay" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="requestModalTitle">
       <div class="modal-header"><h3 id="requestModalTitle"><i class="fas fa-wrench"></i> Form Pengajuan Perbaikan Aset</h3><button class="modal-close" id="requestModalCloseBtn" aria-label="Tutup"><i class="fas fa-times"></i></button></div>
@@ -450,7 +461,7 @@
             <div class="form-group"><label for="namaAset">Nama Aset</label><input type="text" id="namaAset" name="namaAset" required /></div>
             <div class="form-group"><label for="lokasiAset">Lokasi</label><input type="text" id="lokasiAset" name="lokasiAset" required /></div>
             <div class="form-group"><label for="tingkatKerusakan">Tingkat Kerusakan</label><select id="tingkatKerusakan" name="tingkatKerusakan" required><option value="" selected disabled>Pilih...</option><option value="ringan">Ringan</option><option value="sedang">Sedang</option><option value="berat">Berat</option></select></div>
-            <div class="form-group"><label for="fotoAset">Foto Aset</label><input type="file" id="fotoAset" name="fotoAset" accept="image/*" capture="environment" required /><div class="preview" id="fotoPreview"><img id="fotoPreviewImg" alt="Preview foto aset" /><small>Preview foto yang dipilih.</small></div><small style="color:#64748b;font-weight:900;">Foto akan otomatis dikompres (maks 200px).</small></div>
+            <div class="form-group"><label for="fotoAset">Foto Aset</label><input type="file" id="fotoAset" name="fotoAset" accept="image/*" capture="environment" required /><div class="preview" id="fotoPreview"><img id="fotoPreviewImg" alt="Preview foto aset" /><small>Preview foto yang dipilih.</small></div><small style="color:#64748b;font-weight:900;"> </small></div>
             <div class="form-group full"><label for="deskripsiKerusakan">Deskripsi Kerusakan</label><textarea id="deskripsiKerusakan" name="deskripsiKerusakan" required></textarea></div>
           </div>
           <div class="modal-footer"><button type="button" class="btn-secondary" id="requestModalCancelBtn">Batal</button><button type="submit" class="btn-primary" id="btnKirimRequest">Kirim Pengajuan</button></div>
@@ -459,6 +470,7 @@
     </div>
   </div>
 
+  <!-- Mengatur jendela popup (Modal) untuk formulir Login Admin -->
   <div class="modal-overlay" id="adminModalOverlay" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="adminModalTitle">
       <div class="modal-header"><h3 id="adminModalTitle"><i class="fas fa-lock"></i> Login Admin</h3><button class="modal-close" id="adminModalCloseBtn" aria-label="Tutup"><i class="fas fa-times"></i></button></div>
@@ -467,7 +479,7 @@
           <div class="form-grid">
             <div class="form-group full"><label for="adminEmail">Email Admin</label><input type="text" id="adminEmail" name="adminEmail" required /></div>
             <div class="form-group full"><label for="adminPassword">Password</label><input type="password" id="adminPassword" name="adminPassword" required /></div>
-            <div class="form-group full" id="adminLoginError" style="display:none;color:#b91c1c;font-weight:900;">Email atau password salah / session tidak valid.</div>
+            <div class="form-group full" id="adminLoginError" style="display:none;color:#ef4444;font-weight:900;">Email atau password salah.</div>
           </div>
           <div class="modal-footer"><button type="button" class="btn-secondary" id="adminModalCancelBtn">Batal</button><button type="submit" class="btn-primary">Login</button></div>
         </form>
@@ -475,14 +487,15 @@
     </div>
   </div>
 
+  <!-- Mengatur jendela popup (Modal) untuk verifikasi akses/password Pegawai -->
   <div class="modal-overlay" id="pegawaiModalOverlay" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="pegawaiModalTitle">
       <div class="modal-header"><h3 id="pegawaiModalTitle"><i class="fas fa-key"></i> Akses Pegawai</h3><button class="modal-close" id="pegawaiModalCloseBtn" aria-label="Tutup"><i class="fas fa-times"></i></button></div>
       <div class="modal-body">
         <form id="pegawaiAccessForm">
           <div class="form-grid">
-            <div class="form-group full"><label for="pegawaiPassword">Password Pegawai</label><input type="password" id="pegawaiPassword" required /><small style="color:#64748b;font-weight:900;">Masukkan password untuk membuka fitur internal.</small></div>
-            <div class="form-group full" id="pegawaiAccessError" style="display:none;color:#b91c1c;font-weight:900;">Password salah / akses ditolak.</div>
+            <div class="form-group full"><label for="pegawaiPassword">Password Pegawai</label><input type="password" id="pegawaiPassword" required /><small style="color:#64748b;font-weight:600;">Masukkan password untuk fitur internal.</small></div>
+            <div class="form-group full" id="pegawaiAccessError" style="display:none;color:#ef4444;font-weight:900;">Password salah.</div>
           </div>
           <div class="modal-footer"><button type="button" class="btn-secondary" id="pegawaiModalCancelBtn">Batal</button><button type="submit" class="btn-primary">Buka Akses</button></div>
         </form>
@@ -490,8 +503,8 @@
     </div>
   </div>
 
+  <!-- Menghubungkan library eksternal dan file logika JavaScript (script.js) -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
   <script src="script.js"></script>
 </body>
 </html>
