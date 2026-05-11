@@ -1,6 +1,45 @@
 // =========================
+// =========================
+
+// Navbar Scroll
+// Fungsi: Menambahkan efek latar/bayangan pada menu atas saat halaman digulir ke bawah
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  if (window.scrollY > 50) {
+    nav.classList.add('scrolled');
+  } else {
+    nav.classList.remove('scrolled');
+  }
+});
+
+// Count-Up Animation
+// Fungsi: Membuat animasi angka bergerak naik secara bertahap (untuk angka statistik)
+function animateValue(id, target) {
+  const obj = document.getElementById(id);
+  if (!obj) return;
+  // Reset text first
+  obj.innerHTML = "0";
+  if (target === 0) return;
+  
+  let start = 0;
+  const duration = 1500;
+  const step = Math.max(1, Math.ceil(target / (duration / 16)));
+  
+  const timer = setInterval(() => {
+    start += step;
+    if (start >= target) {
+      obj.innerHTML = target;
+      clearInterval(timer);
+    } else {
+      obj.innerHTML = start;
+    }
+  }, 16);
+}
+
+// =========================
 // SLIDER GALERI JS
 // =========================
+// Fungsi: Mengatur pergeseran foto (prev/next) pada setiap item galeri
 const sliderIndices = {};
 function moveSlide(sliderId, step) {
   const wrapper = document.getElementById(sliderId);
@@ -19,9 +58,11 @@ function moveSlide(sliderId, step) {
 // =========================
 // EmailJS init (PUBLIC KEY)
 // =========================
+// Fungsi: Menghubungkan website dengan layanan pengirim email
 emailjs.init({ publicKey: 'dLdHcee9nQkCWdVcY' });
 
 // Send notification via EmailJS
+// Fungsi: Mengirimkan data laporan kerusakan ke email tujuan
 function sendEmailNotifikasiPerbaikan(data) {
   return emailjs.send('service_4q1q0ai', 'template_xvtok0p', {
     to_email: "sinatriarupa@gmail.com",
@@ -38,6 +79,7 @@ function sendEmailNotifikasiPerbaikan(data) {
 // =========================
 // CONFIG
 // =========================
+// Fungsi: Menyimpan link API Google Apps Script dan nama token penyimpanan lokal
 const ASSET_API_URL = "https://script.google.com/macros/s/AKfycbzk1fXQhTh42go2G0wbOERkGdPCQUtc881RS2hNzWaAIBkH0x_DUlmnsRnXR8nJLks/exec";
 const ADMIN_TOKEN_KEY = "sinatria_admin_token";
 const PEGAWAI_TOKEN_KEY = "sinatria_pegawai_token";
@@ -46,8 +88,11 @@ const ASSET_STORAGE_KEY = "sinatria_assets_v1";
 // =========================
 // HELPERS
 // =========================
+// Fungsi: Mengamankan teks dari kode berbahaya (XSS)
 function escapeHtml(str) { return String(str).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;"); }
+// Fungsi: Membaca data JSON dengan aman tanpa membuat web crash jika gagal
 function safeJsonParse(text) { try { return JSON.parse(text); } catch { return { ok: false, error: text }; } }
+// Fungsi: Jembatan utama untuk mengirim data request POST ke API server
 function apiPost(payload) {
   return fetch(ASSET_API_URL, {
     method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify(payload)
@@ -58,27 +103,32 @@ function apiPost(payload) {
 }
 
 // Token & Auth
+// Fungsi: Mengelola penyimpanan tanda masuk (token) Admin di browser
 function getAdminToken() { return sessionStorage.getItem(ADMIN_TOKEN_KEY) || ""; }
 function setAdminToken(token) { sessionStorage.setItem(ADMIN_TOKEN_KEY, token); }
 function clearAdminToken() { sessionStorage.removeItem(ADMIN_TOKEN_KEY); }
 function isAdminLoggedIn() { return Boolean(getAdminToken()); }
 
+// Fungsi: Mengelola penyimpanan tanda masuk (token) Pegawai di browser
 function getPegawaiToken() { return sessionStorage.getItem(PEGAWAI_TOKEN_KEY) || ""; }
 function setPegawaiToken(token) { sessionStorage.setItem(PEGAWAI_TOKEN_KEY, token); }
 function clearPegawaiToken() { sessionStorage.removeItem(PEGAWAI_TOKEN_KEY); }
 function isPegawai() { return Boolean(getPegawaiToken()); }
 
+// Fungsi: Mendeteksi jika sesi login telah kedaluwarsa/ditolak server
 function isUnauthorizedError(msg) {
   const s = String(msg || "").toLowerCase();
   return s.includes("unauthorized") || s.includes("not logged in") || s.includes("session expired");
 }
 
+// Fungsi: Mencegah admin memproses data jika tokennya tidak sah
 async function guardUnauthorizedAdmin(promise) {
   const out = await promise;
   if (out && out.ok === false && isUnauthorizedError(out.error)) forceAdminLogout(out.error);
   return out;
 }
 
+// Fungsi: Mencegah pegawai memproses data jika tokennya tidak sah
 async function guardUnauthorizedPegawai(promise) {
   const out = await promise;
   if (out && out.ok === false && isUnauthorizedError(out.error)) forcePegawaiLogout(out.error);
@@ -86,14 +136,18 @@ async function guardUnauthorizedPegawai(promise) {
 }
 
 // Server Auth Calls
+// Fungsi: Memeriksa dan mengirim kredensial login Admin ke server
 async function authLogin(email, password) { return apiPost({ mode: "authLogin", email, password }); }
+// Fungsi: Mengirim perintah logout Admin ke server
 async function authLogout() { const token = getAdminToken(); if (!token) return { ok: true }; return apiPost({ mode: "authLogout", sessionToken: token }); }
 
+// Fungsi: Mengeluarkan paksa Admin jika terjadi error/sesi habis
 function forceAdminLogout(reason) {
   if (reason) console.warn("Admin logout:", reason);
   authLogout().catch(()=>{}); clearAdminToken(); applyAdminUI();
 }
 
+// Fungsi: Memeriksa validitas sesi Admin saat halaman baru dimuat
 async function verifyAdminTokenOnLoad() {
   const token = getAdminToken();
   if (!token) return;
@@ -103,12 +157,15 @@ async function verifyAdminTokenOnLoad() {
   } catch (err) { console.warn("authMe check failed:", err); }
 }
 
+// Fungsi: Memeriksa login dan mengirim perintah logout Pegawai
 async function pegawaiLogin(password) { return apiPost({ mode: "pegawaiLogin", password }); }
 async function pegawaiLogout() { const token = getPegawaiToken(); if (!token) return { ok: true }; return apiPost({ mode: "pegawaiLogout", pegawaiToken: token }); }
+// Fungsi: Mengeluarkan paksa Pegawai jika terjadi error/sesi habis
 function forcePegawaiLogout(reason) {
   if (reason) console.warn("Pegawai logout:", reason);
   pegawaiLogout().catch(()=>{}); clearPegawaiToken(); clearAdminToken(); applyPegawaiUI(); applyAdminUI();
 }
+// Fungsi: Memeriksa validitas sesi Pegawai saat halaman baru dimuat
 async function verifyPegawaiTokenOnLoad() {
   const token = getPegawaiToken();
   if (!token) return;
@@ -119,27 +176,28 @@ async function verifyPegawaiTokenOnLoad() {
 }
 
 // Format Helpers
+// Fungsi: Mengubah ID file dari server menjadi link Google Drive yang bisa diklik
 function driveViewUrlFromFileId(fileId) { const id = String(fileId || "").trim(); return id ? `https://drive.google.com/file/d/${encodeURIComponent(id)}/view` : ""; }
+// Fungsi: Mengubah format tanggal mentah (ISO) menjadi format mudah dibaca (DD/MM/YYYY)
 function formatIso(iso) {
   try {
     const d = new Date(iso);
     if (Number.isNaN(d.getTime())) return String(iso || "-");
-
-    // Mengambil komponen tanggal secara manual agar formatnya konsisten
     const day = String(d.getDate()).padStart(2, '0');
-    const month = String(d.getMonth() + 1).padStart(2, '0'); // Bulan dimulai dari 0
+    const month = String(d.getMonth() + 1).padStart(2, '0');
     const year = d.getFullYear();
     const hours = String(d.getHours()).padStart(2, '0');
     const minutes = String(d.getMinutes()).padStart(2, '0');
-
     return `${day}/${month}/${year} ${hours}:${minutes}`;
   } catch { 
     return String(iso || "-"); 
   }
 }
+// Fungsi: Mengatur kelas warna dan teks sesuai status perbaikan aset
 function getStatusClass(status) { const s = String(status || "").toLowerCase(); if (s === "dilaporkan") return "status-dilaporkan"; if (s === "proses") return "status-proses"; return "status-selesai"; }
 function normalizeStatus(status) { const s = String(status || "").toLowerCase(); if (s === "dilaporkan") return "Dilaporkan"; if (s === "proses") return "Proses"; return "Sudah di perbaiki"; }
 
+// Fungsi: Mengecilkan ukuran resolusi dan kapasitas foto sebelum diunggah agar cepat
 async function compressImageToDataUrl(file, maxSizePx = 200, quality = 0.7) {
   const imgUrl = URL.createObjectURL(file);
   try {
@@ -156,6 +214,7 @@ async function compressImageToDataUrl(file, maxSizePx = 200, quality = 0.7) {
 // =========================
 // MOBILE NAV TOGGLE
 // =========================
+// Fungsi: Membuka dan menutup panel menu saat di layar HP
 const navToggleBtn = document.getElementById("navToggleBtn");
 const mobileNav = document.getElementById("mobileNav");
 const mobileNavCloseBtn = document.getElementById("mobileNavCloseBtn");
@@ -168,8 +227,9 @@ mobileNav.addEventListener("click", (e) => { if (e.target === mobileNav) closeMo
 document.querySelectorAll(".mobile-link").forEach(a => { a.addEventListener("click", () => { const href = a.getAttribute("href") || ""; if (href.startsWith("#")) closeMobileNav(); }); });
 
 // =========================
-// UI APPLY (Hiding Access Menu & Show Internal Menus)
+// UI APPLY
 // =========================
+// Fungsi: Menampilkan/menyembunyikan menu berdasarkan status login Pegawai
 const pegawaiAccessLink = document.getElementById("pegawaiAccessLink");
 const mobilePegawaiAccessLink = document.getElementById("mobilePegawaiAccessLink");
 const pegawaiLogoutBtn = document.getElementById("pegawaiLogoutBtn");
@@ -180,15 +240,12 @@ const mobileRiwayatNavLink = document.getElementById("mobileRiwayatNavLink");
 
 function applyPegawaiUI() {
   const ok = isPegawai();
-  
-  // Desktop Menu: Sembunyikan "Akses Pegawai" dan Tampilkan Internal jika Login
   document.getElementById("kelolaAsetLink").parentElement.style.display = ok ? "" : "none";
   document.getElementById("inputAsetLink").parentElement.style.display = ok ? "" : "none";
   document.getElementById("requestPerbaikanLink").parentElement.style.display = ok ? "" : "none";
   document.getElementById("riwayatNavLink").parentElement.style.display = ok ? "" : "none";
   document.getElementById("pegawaiAccessLink").parentElement.style.display = ok ? "none" : "";
 
-  // Mobile Menu
   document.getElementById("mobileKelolaAsetLink").style.display = ok ? "flex" : "none";
   document.getElementById("mobileInputAsetLink").style.display = ok ? "flex" : "none";
   document.getElementById("mobileRequestPerbaikanLink").style.display = ok ? "flex" : "none";
@@ -208,6 +265,7 @@ function applyPegawaiUI() {
 }
 
 // Pegawai Modal
+// Fungsi: Mengatur interaksi pop-up (buka, tutup, submit) untuk login Pegawai
 const pegawaiOverlay = document.getElementById("pegawaiModalOverlay");
 const pegawaiCloseBtn = document.getElementById("pegawaiModalCloseBtn");
 const pegawaiCancelBtn = document.getElementById("pegawaiModalCancelBtn");
@@ -239,10 +297,12 @@ pegawaiForm.addEventListener("submit", async (e) => {
   } catch (err) { pegawaiErr.textContent = "Login pegawai gagal: " + String(err); pegawaiErr.style.display = "block"; }
 });
 
+// Fungsi: Menjalankan konfirmasi dan proses logout Pegawai
 async function logoutPegawaiFlow() { const ok = confirm("Logout pegawai?"); if (!ok) return; forcePegawaiLogout("manual logout pegawai"); alert("Logout pegawai berhasil."); }
 pegawaiLogoutBtn.addEventListener("click", logoutPegawaiFlow);
 mobilePegawaiLogoutBtn.addEventListener("click", (e) => { e.preventDefault(); closeMobileNav(); logoutPegawaiFlow(); });
 
+// Fungsi: Memaksa halaman membuka pop-up login jika user bukan pegawai
 function requirePegawai_(e) {
   if (isPegawai()) return true;
   if(e) e.preventDefault();
@@ -250,6 +310,7 @@ function requirePegawai_(e) {
 }
 
 // Admin Modal
+// Fungsi: Mengatur interaksi pop-up (buka, tutup, submit) untuk login Admin
 const adminLoginBtn = document.getElementById("adminLoginBtn");
 const adminLogoutBtn = document.getElementById("adminLogoutBtn");
 const mobileAdminLoginBtn = document.getElementById("mobileAdminLoginBtn");
@@ -285,13 +346,15 @@ adminForm.addEventListener("submit", async (e) => {
   } catch (err) { adminLoginError.textContent = "Login gagal: " + String(err); adminLoginError.style.display = "block"; }
 });
 
+// Fungsi: Menjalankan konfirmasi dan proses logout Admin
 async function logoutAdminFlow() { const ok = confirm("Logout admin?"); if (!ok) return; forceAdminLogout("manual logout"); }
 adminLogoutBtn.addEventListener("click", logoutAdminFlow);
 mobileAdminLogoutBtn.addEventListener("click", (e) => { e.preventDefault(); closeMobileNav(); logoutAdminFlow(); });
 
 // =========================
-// NAVIGASI INTERNAL (DIPERBAIKI)
+// NAVIGASI INTERNAL 
 // =========================
+// Fungsi: Mengatur perpindahan antar menu dalam halaman (Kelola, Input, Home) tanpa memuat ulang web
 const kelolaAsetSection = document.getElementById("kelola-aset");
 const inputAsetSection = document.getElementById("input-aset");
 const inputAsetLink = document.getElementById("inputAsetLink");
@@ -308,6 +371,7 @@ function showInputAsetSection() {
 function goHome() { inputAsetSection.style.display = "none"; location.hash = "#beranda"; window.scrollTo({ top: 0, behavior: "smooth" }); }
 function goKelolaAset() { kelolaAsetSection.classList.add("show"); renderAssetsManager(); location.hash = "#kelola-aset"; kelolaAsetSection.scrollIntoView({ behavior: "smooth", block: "start" }); }
 
+// Mengecek akses sebelum membuka bagian tertentu
 function handleInputAsetClick(e) { if(e) e.preventDefault(); if (!requirePegawai_(e)) return; if (isAdminLoggedIn()) showInputAsetSection(); else openAdminModal("input-aset"); }
 function handleKelolaAsetClick(e) { if(e) e.preventDefault(); if (!requirePegawai_(e)) return; if (isAdminLoggedIn()) goKelolaAset(); else openAdminModal("kelola-aset"); }
 function handleRequestClick(e) { if(e) e.preventDefault(); if (!requirePegawai_(e)) return; openRequestModal(); }
@@ -323,8 +387,9 @@ riwayatNavLink.addEventListener("click", (e) => { requirePegawai_(e); });
 mobileRiwayatNavLink.addEventListener("click", (e) => { if (!requirePegawai_(e)) return; closeMobileNav(); });
 
 // =========================
-// Monitoring from localStorage (aset)
+// Monitoring from localStorage
 // =========================
+// Fungsi: Menghitung dan menggambar diagram data aset dari penyimpanan browser
 function loadAssets() { try { const raw = localStorage.getItem(ASSET_STORAGE_KEY); return raw ? JSON.parse(raw) : []; } catch { return []; } }
 function saveAssets(assets) { localStorage.setItem(ASSET_STORAGE_KEY, JSON.stringify(assets)); }
 function computeMonitoringFromAssets(assets) {
@@ -344,25 +409,33 @@ function setDonutSegments({ baik, perbaiki, rusak, total }) {
   document.getElementById("seg-rusak").style.strokeDashoffset = `${-(lenBaik + lenPer)}`;
   document.getElementById("legend-baik").textContent = baik; document.getElementById("legend-perbaiki").textContent = perbaiki; document.getElementById("legend-rusak").textContent = rusak;
   document.getElementById("pct-baik").textContent = `(${Math.round(pBaik * 100)}%)`; document.getElementById("pct-perbaiki").textContent = `(${Math.round(pPer * 100)}%)`; document.getElementById("pct-rusak").textContent = `(${Math.round(pRus * 100)}%)`;
-  document.getElementById("donut-total").textContent = total;
+  
+  // animasi untuk angka KPI
+  animateValue("donut-total", total);
+  animateValue("kpi-total", total);
+  animateValue("kpi-baik", baik);
+  animateValue("kpi-perbaiki", perbaiki);
+  animateValue("kpi-rusak", rusak);
 }
-function setMonitoringData({ total, baik, perbaiki, rusak }) {
-  document.getElementById("kpi-total").textContent = total; document.getElementById("kpi-baik").textContent = baik; document.getElementById("kpi-perbaiki").textContent = perbaiki; document.getElementById("kpi-rusak").textContent = rusak;
-  setDonutSegments({ baik, perbaiki, rusak, total });
+function setMonitoringData(data) {
+  setDonutSegments(data);
 }
 function refreshMonitoringFromAssets() { const assets = loadAssets(); setMonitoringData(computeMonitoringFromAssets(assets)); }
 
 // =========================
 // ASET CRUD
 // =========================
+// Fungsi: Menangani form penambahan aset (Create), membaca aset (Read), dan menghapusnya (Delete)
 const inputAsetForm = document.getElementById("inputAsetForm");
 const btnTidakSimpan = document.getElementById("btnTidakSimpan");
 const asetMsg = document.getElementById("asetMsg");
 const btnSimpanAset = document.getElementById("btnSimpanAset");
 
 function showAsetMsg(text, ok) { asetMsg.style.display = "block"; asetMsg.style.color = ok ? "#166534" : "#b91c1c"; asetMsg.textContent = text; }
-btnTidakSimpan.addEventListener("click", () => { inputAsetForm.reset(); goHome(); });
+// Fungsi: Membuat kode unik (ID) untuk setiap data aset yang baru dibuat
 function makeAssetId() { if (window.crypto && typeof crypto.randomUUID === "function") return crypto.randomUUID(); return "asset_" + Date.now() + "_" + Math.random().toString(16).slice(2); }
+
+btnTidakSimpan.addEventListener("click", () => { inputAsetForm.reset(); goHome(); });
 
 inputAsetForm.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -396,6 +469,7 @@ const selectAllAssetsBtn = document.getElementById("selectAllAssetsBtn");
 const unselectAllAssetsBtn = document.getElementById("unselectAllAssetsBtn");
 const deleteSelectedAssetsBtn = document.getElementById("deleteSelectedAssetsBtn");
 
+// Fungsi: Menampilkan baris data aset ke dalam tabel "Kelola Aset"
 function renderAssetsManager() {
   if (!isPegawai()) { assetsTbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:#6b7280;padding:18px;white-space:normal;">Silakan login pegawai untuk mengakses fitur internal.</td></tr>`; return; }
   if (!isAdminLoggedIn()) { assetsTbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:#6b7280;padding:18px;white-space:normal;">Silakan login admin untuk melihat data aset.</td></tr>`; return; }
@@ -409,11 +483,13 @@ function renderAssetsManager() {
   });
 }
 
+// Fungsi: Membantu mencentang atau menghapus centang pada seluruh baris tabel aset sekaligus
 function setAllAssetCheckboxes(checked) { document.querySelectorAll(".asset-checkbox").forEach(c => { c.checked = checked; }); }
 function getSelectedAssetIndexes() { return Array.from(document.querySelectorAll(".asset-checkbox")).filter(c => c.checked).map(c => Number(c.getAttribute("data-index"))).filter(n => Number.isFinite(n)); }
 selectAllAssetsBtn.addEventListener("click", () => { if (isAdminLoggedIn()) setAllAssetCheckboxes(true); });
 unselectAllAssetsBtn.addEventListener("click", () => { if (isAdminLoggedIn()) setAllAssetCheckboxes(false); });
 
+// Fungsi: Memproses penghapusan data aset yang tercentang (di sheet dan lokal)
 deleteSelectedAssetsBtn.addEventListener("click", async () => {
   if (!isPegawai()) { openPegawaiModal(); return; } if (!isAdminLoggedIn()) { alert("Akses ditolak. Silakan login admin."); openAdminModal("kelola-aset"); return; }
   const selected = getSelectedAssetIndexes(); if (selected.length === 0) { alert("Belum ada aset yang dipilih."); return; }
@@ -436,6 +512,7 @@ deleteSelectedAssetsBtn.addEventListener("click", async () => {
 // =========================
 // PENGAJUAN PERBAIKAN
 // =========================
+// Fungsi: Mengatur jendela form (modal) untuk mengirim keluhan/laporan perbaikan aset beserta fotonya
 const requestOverlay = document.getElementById("requestModalOverlay");
 const requestCloseBtn = document.getElementById("requestModalCloseBtn");
 const requestCancelBtn = document.getElementById("requestModalCancelBtn");
@@ -448,11 +525,14 @@ const btnKirimRequest = document.getElementById("btnKirimRequest");
 function openRequestModal() { requestOverlay.classList.add("show"); requestOverlay.setAttribute("aria-hidden", "false"); setTimeout(() => document.getElementById("namaPemohon")?.focus(), 50); }
 function closeRequestModal() { requestOverlay.classList.remove("show"); requestOverlay.setAttribute("aria-hidden", "true"); }
 requestCloseBtn.addEventListener("click", closeRequestModal); requestCancelBtn.addEventListener("click", closeRequestModal); requestOverlay.addEventListener("click", (e) => { if (e.target === requestOverlay) closeRequestModal(); });
+
+// Menampilkan gambar secara langsung sebelum diunggah ke server (Preview)
 fotoInput.addEventListener("change", () => {
   const file = fotoInput.files && fotoInput.files[0]; if (!file) { previewWrap.classList.remove("show"); previewImg.removeAttribute("src"); return; }
   const url = URL.createObjectURL(file); previewImg.src = url; previewWrap.classList.add("show");
 });
 
+// Memproses pengiriman data laporan dan memanggil fungsi kirim notifikasi email
 requestForm.addEventListener("submit", async (e) => {
   e.preventDefault(); if (!isPegawai()) { openPegawaiModal(); return; } if (!ASSET_API_URL) { alert("ASSET_API_URL belum diisi."); return; }
   const data = new FormData(requestForm); const file = fotoInput.files && fotoInput.files[0]; if (!file) { alert("Foto wajib diisi."); return; }
@@ -475,6 +555,7 @@ requestForm.addEventListener("submit", async (e) => {
 // =========================
 // REPORTS
 // =========================
+// Fungsi: Mengambil dan menampilkan riwayat laporan kerusakan ke dalam tabel (atau card di HP)
 const reportsTbody = document.getElementById("reportsTbody");
 const clearReportsBtn = document.getElementById("clearReportsBtn");
 const reportsCards = document.getElementById("reportsCards");
@@ -482,12 +563,14 @@ const selectAllReportsBtn = document.getElementById("selectAllReportsBtn");
 const deleteSelectedReportsBtn = document.getElementById("deleteSelectedReportsBtn");
 const deleteAllReportsBtn = document.getElementById("deleteAllReportsBtn");
 
+// Meminta daftar data laporan langsung ke server
 async function fetchReportsFromSheet() {
   const data = await guardUnauthorizedPegawai(apiPost({ mode: "reportList", pegawaiToken: getPegawaiToken() }));
   if (!data.ok) throw new Error(data.error || "Gagal mengambil laporan");
   return Array.isArray(data.reports) ? data.reports : [];
 }
 
+// Fungsi bantu centang (checkbox) baris laporan
 function setAllReportCheckboxes(checked) { document.querySelectorAll(".report-checkbox").forEach(cb => { cb.checked = checked; }); }
 function getSelectedReportIds() {
   return Array.from(document.querySelectorAll(".report-checkbox"))
@@ -495,6 +578,7 @@ function getSelectedReportIds() {
     .map(cb => cb.getAttribute("data-reportid"))
     .filter(Boolean);
 }
+// Sinkronisasi centang antara tabel desktop dan card versi mobile
 function bindReportCheckboxSync() {
   document.querySelectorAll(".report-checkbox").forEach(cb => {
     cb.addEventListener("change", (e) => {
@@ -507,13 +591,16 @@ function bindReportCheckboxSync() {
   });
 }
 
+// Perintah hapus baris laporan yang spesifik
 async function deleteManyReportsFromSheet(reportIds) {
   return guardUnauthorizedAdmin(apiPost({ mode: "reportDeleteMany", sessionToken: getAdminToken(), reportIds }));
 }
+// Perintah hapus seluruh baris laporan sekaligus (Bersihkan)
 async function deleteAllReportsFromSheet() {
   return guardUnauthorizedAdmin(apiPost({ mode: "reportDeleteAll", sessionToken: getAdminToken() }));
 }
 
+// Fungsi: Merender (mencetak) data JSON ke dalam format HTML (tabel untuk layar besar & kartu untuk layar kecil HP)
 function renderReportsFromData(reports) {
   reportsTbody.innerHTML = "";
   reportsCards.innerHTML = "";
@@ -525,6 +612,7 @@ function renderReportsFromData(reports) {
 
   const isAdmin = isAdminLoggedIn();
 
+  // Mencetak tabel (Tampilan Desktop)
   reports.forEach((r) => {
     const status = normalizeStatus(r.status || "Dilaporkan");
     const tingkat = String(r.tingkat || "").toLowerCase();
@@ -562,6 +650,7 @@ function renderReportsFromData(reports) {
     reportsTbody.appendChild(tr);
   });
 
+  // Mencetak list kartu (Tampilan Layar Mobile/HP)
   reports.forEach((r) => {
     const status = normalizeStatus(r.status || "Dilaporkan");
     const tingkat = String(r.tingkat || "").toLowerCase();
@@ -584,7 +673,7 @@ function renderReportsFromData(reports) {
     card.className = "report-card";
     card.innerHTML = `
       <div class="rc-head">
-        <div class="date">${formatIso(r.tanggal)}</div>9
+        <div class="date">${formatIso(r.tanggal)}</div>
         <div class="meta">
           <span class="status-badge ${getStatusClass(status)}">${escapeHtml(status)}</span>
           <span class="badge ${badgeClass}">${escapeHtml(tingkat || "-")}</span>
@@ -603,6 +692,7 @@ function renderReportsFromData(reports) {
     reportsCards.appendChild(card);
   });
 
+  // Memberi fungsi aksi (ubah status) pada Dropdown khusus admin
   if (isAdminLoggedIn()) {
     document.querySelectorAll(".report-status-select").forEach(sel => {
       sel.addEventListener("change", async (e) => {
@@ -621,12 +711,14 @@ function renderReportsFromData(reports) {
   }
 }
 
+// Fungsi: Menarik data terbaru dari spreadsheet dan merefresh tampilan tabel/kartu laporan
 async function refreshReports() {
   if (!isPegawai()) return;
   const reports = await fetchReportsFromSheet();
   renderReportsFromData(reports);
 }
 
+// Mengaktifkan klik tombol refresh riwayat laporan
 clearReportsBtn.addEventListener("click", async () => {
   if (!isPegawai()) { openPegawaiModal(); return; }
   try { await refreshReports(); }
@@ -635,6 +727,7 @@ clearReportsBtn.addEventListener("click", async () => {
 
 selectAllReportsBtn.addEventListener("click", () => { if (isAdminLoggedIn()) setAllReportCheckboxes(true); });
 
+// Eksekusi penghapusan pada sebagian laporan yang dicentang
 deleteSelectedReportsBtn.addEventListener("click", async () => {
   if (!isAdminLoggedIn()) return;
   const ids = getSelectedReportIds();
@@ -660,6 +753,7 @@ deleteSelectedReportsBtn.addEventListener("click", async () => {
   }
 });
 
+// Eksekusi penghapusan seluruh/semua laporan sekaligus dari sistem
 deleteAllReportsBtn.addEventListener("click", async () => {
   if (!isAdminLoggedIn()) return;
   const ok = confirm("Yakin hapus SEMUA riwayat laporan?");
@@ -682,6 +776,7 @@ deleteAllReportsBtn.addEventListener("click", async () => {
   }
 });
 
+// Fungsi: Menyembunyikan dan menampilkan fitur kelola jika Admin berhasil login
 function applyAdminUI() {
   const ok = isAdminLoggedIn();
   selectAllReportsBtn.style.display = ok ? "inline-flex" : "none";
@@ -693,6 +788,7 @@ function applyAdminUI() {
   applyPegawaiUI();
 }
 
+// Fungsi Pemicu (Init): Berjalan otomatis saat halaman pertama kali diakses/dimuat
 (async function init() {
   refreshMonitoringFromAssets();
   await verifyPegawaiTokenOnLoad();
